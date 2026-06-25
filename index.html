@@ -83,7 +83,7 @@
 
         @media print {
             body { background-color: #ffffff !important; color: #000000 !important; padding: 0 !important; }
-            header, .lg\:col-span-5, .text-xs.font-bold.uppercase, #validation-view-panel, #login-view-panel { display: none !important; }
+            header, .lg\:col-span-5, .text-xs.font-bold.uppercase, #validation-view-panel { display: none !important; }
             .max-w-7xl { max-w: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
             .grid { display: block !important; }
             .lg\:col-span-7 { display: flex !important; flex-direction: row !important; justify-content: center !important; gap: 24px !important; width: 100% !important; margin-top: 40px !important; }
@@ -97,6 +97,7 @@
 </head>
 <body class="p-4 md:p-8">
 
+    <!-- 1. LIVE PUBLIC SCANNER VALIDATOR SCREEN -->
     <div id="validation-view-panel" class="hidden max-w-md mx-auto my-12 bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center shadow-2xl animate-fade-in">
         <div class="w-20 h-20 bg-emerald-500/10 border border-emerald-500/30 rounded-full flex items-center justify-center mx-auto mb-4">
             <i class="fa-solid fa-shield-check text-emerald-500 text-4xl"></i>
@@ -133,32 +134,7 @@
         </p>
     </div>
 
-    <div id="login-view-panel" class="hidden max-w-md mx-auto my-16 bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl">
-        <div class="text-center mb-6">
-            <div class="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-3 border border-emerald-500/20">
-                <i class="fa-solid fa-lock text-2xl"></i>
-            </div>
-            <h2 class="text-xl font-bold text-white font-heading">HDHTAN Management Console</h2>
-            <p class="text-slate-400 text-xs mt-1">Authorized Taskforce personnel administration only</p>
-        </div>
-        <form id="login-form" class="space-y-4">
-            <div>
-                <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Administrator Email</label>
-                <input id="login-email" type="email" required placeholder="name@domain.com" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-500 transition text-sm">
-            </div>
-            <div>
-                <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Security Passkey</label>
-                <input id="login-password" type="password" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-500 transition text-sm">
-            </div>
-            <div id="login-error-message" class="hidden text-xs font-bold text-red-500 bg-red-500/10 p-2.5 rounded border border-red-500/20 text-center uppercase tracking-wide">
-                Invalid Admin Credentials Provided
-            </div>
-            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-xl shadow-lg transition text-xs uppercase tracking-wider">
-                Authenticate Session
-            </button>
-        </form>
-    </div>
-
+    <!-- 2. MAIN ID GENERATOR PANEL (Direct Entry) -->
     <div id="generator-view-panel" class="hidden max-w-7xl mx-auto">
         <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-6 border-b border-slate-800">
             <div>
@@ -171,8 +147,8 @@
             <div class="flex items-center gap-3 mt-4 md:mt-0 bg-slate-900/80 p-3 rounded-lg border border-slate-800">
                 <i class="fa-solid fa-user-shield text-emerald-500 text-xl"></i>
                 <div>
-                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Admin Email</p>
-                    <p class="text-sm font-semibold text-slate-200">malabubakarmohammed679@gmail.com</p>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Console Mode</p>
+                    <p class="text-sm font-semibold text-emerald-400">Direct Administration Access</p>
                 </div>
             </div>
         </header>
@@ -268,4 +244,123 @@
                 </div>
 
                 <div class="flex flex-col items-center">
-                    <span class="text-xs font-
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">PVC ID Card Back</span>
+                    <div class="id-card-wrapper flex flex-col justify-between p-4 bg-white text-slate-800 relative">
+                        <img src="hdhtan logo.jpg" alt="HDHTAN Watermark" class="watermark-bg">
+                        <div class="text-center border-b border-red-600/20 pb-2 z-10 w-full">
+                            <span class="text-[12px] font-black text-red-600 uppercase tracking-wider block font-heading leading-tight">HDHTAN SPECIAL TASKFORCE<br>TARABA STATE</span>
+                        </div>
+                        <div class="flex flex-col justify-between flex-1 my-2 px-2 text-center z-10 w-full">
+                            <div class="mt-4">
+                                <p class="text-[11px] text-slate-700 font-bold leading-relaxed uppercase">
+                                    If lost kindly call <span class="text-emerald-700 font-extrabold block text-[14px] my-1">08106295277</span> or return to a nearest police station.
+                                </p>
+                            </div>
+                            <div class="my-2 flex flex-col items-center justify-center">
+                                <div class="w-20 h-20 bg-white p-1 border border-slate-200 rounded-lg shadow-sm">
+                                    <img id="card-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Pending" alt="Verification QR Code" class="w-full h-full object-contain">
+                                </div>
+                                <span class="text-[6px] font-black text-emerald-800 tracking-wider uppercase mt-1">
+                                    <i class="fa-solid fa-qrcode mr-0.5"></i> SECURE SCANNER VALIDATION
+                                </span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 w-full border-t border-slate-100 pt-2 text-left">
+                                <div>
+                                    <div class="card-label !text-emerald-800">ISSUE DATE:</div>
+                                    <div id="card-issue" class="card-value font-mono text-[11px] !text-slate-900"></div>
+                                </div>
+                                <div>
+                                    <div class="card-label !text-emerald-800">EXPIRE DATE:</div>
+                                    <div id="card-expire" class="card-value font-mono text-[11px] !text-red-600 font-bold"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-[6.5px] text-slate-400 text-center border-t border-slate-100 pt-1 z-10 w-full">Official National Anti-Sabotage Monitoring Identity Document © 2026.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        const valPanel = document.getElementById('validation-view-panel');
+        const genPanel = document.getElementById('generator-view-panel');
+
+        if (urlParams.has('verify') && urlParams.get('verify') === 'true') {
+            // If scanning a QR code, show verification screen
+            valPanel.classList.remove('hidden');
+            document.body.classList.replace('bg-[#0b0f19]', 'bg-[#070a13]');
+            
+            document.getElementById('v-name').innerText = urlParams.get('name') || 'UNKNOWN';
+            document.getElementById('v-position').innerText = urlParams.get('pos') || 'UNKNOWN';
+            document.getElementById('v-issue').innerText = urlParams.get('issued') || 'UNKNOWN';
+            document.getElementById('v-expire').innerText = urlParams.get('expires') || 'UNKNOWN';
+        } else {
+            // Go straight to the dashboard generator securely
+            genPanel.classList.remove('hidden');
+            initializeGenerator();
+        }
+
+        function initializeGenerator() {
+            const inputName = document.getElementById('input-name');
+            const inputPosition = document.getElementById('input-position');
+            const inputIssue = document.getElementById('input-issue');
+            const inputExpire = document.getElementById('input-expire');
+            const inputImage = document.getElementById('input-image');
+            const inputSignature = document.getElementById('input-signature');
+
+            const cardName = document.getElementById('card-name');
+            const cardPosition = document.getElementById('card-position');
+            const cardIssue = document.getElementById('card-issue');
+            const cardExpire = document.getElementById('card-expire');
+            const cardPhoto = document.getElementById('card-photo');
+            const cardSign = document.getElementById('card-sign');
+            const cardQr = document.getElementById('card-qr');
+
+            function updateCardText() {
+                const nameVal = inputName.value.toUpperCase() || "";
+                const posVal = inputPosition.value.toUpperCase() || "";
+                const issueVal = inputIssue.value || "";
+                const expireVal = inputExpire.value || "";
+
+                cardName.innerText = nameVal;
+                cardPosition.innerText = posVal;
+                cardIssue.innerText = issueVal;
+                cardExpire.innerText = expireVal;
+
+                const baseUrl = window.location.href.split('?')[0];
+                const verificationUrl = `${baseUrl}?verify=true&name=${encodeURIComponent(nameVal)}&pos=${encodeURIComponent(posVal)}&issued=${encodeURIComponent(issueVal)}&expires=${encodeURIComponent(expireVal)}`;
+                
+                cardQr.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verificationUrl)}`;
+            }
+
+            inputName.addEventListener('input', updateCardText);
+            inputPosition.addEventListener('input', updateCardText);
+            inputIssue.addEventListener('input', updateCardText);
+            inputExpire.addEventListener('input', updateCardText);
+
+            inputImage.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) { cardPhoto.src = event.target.result; };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            inputSignature.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) { cardSign.src = event.target.result; };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            updateCardText();
+        }
+    </script>
+</body>
+</html>
