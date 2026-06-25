@@ -83,7 +83,7 @@
 
         @media print {
             body { background-color: #ffffff !important; color: #000000 !important; padding: 0 !important; }
-            header, .lg\:col-span-5, .text-xs.font-bold.uppercase, #validation-view-panel { display: none !important; }
+            header, .lg\:col-span-5, .text-xs.font-bold.uppercase, #validation-view-panel, #login-view-panel { display: none !important; }
             .max-w-7xl { max-w: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
             .grid { display: block !important; }
             .lg\:col-span-7 { display: flex !important; flex-direction: row !important; justify-content: center !important; gap: 24px !important; width: 100% !important; margin-top: 40px !important; }
@@ -134,7 +134,34 @@
         </p>
     </div>
 
-    <!-- 2. MAIN ID GENERATOR PANEL (Direct Entry) -->
+    <!-- 2. ADMIN PORTAL LOGIN INTERFACE -->
+    <div id="login-view-panel" class="hidden max-w-md mx-auto my-16 bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl">
+        <div class="text-center mb-6">
+            <div class="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-3 border border-emerald-500/20">
+                <i class="fa-solid fa-lock text-2xl"></i>
+            </div>
+            <h2 class="text-xl font-bold text-white font-heading">HDHTAN Management Console</h2>
+            <p class="text-slate-400 text-xs mt-1">Authorized Taskforce personnel administration only</p>
+        </div>
+        <form id="login-form" class="space-y-4">
+            <div>
+                <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Administrator Email</label>
+                <input id="login-email" type="email" required placeholder="name@domain.com" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-500 transition text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Security Passkey</label>
+                <input id="login-password" type="password" required placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-500 transition text-sm">
+            </div>
+            <div id="login-error-message" class="hidden text-xs font-bold text-red-500 bg-red-500/10 p-2.5 rounded border border-red-500/20 text-center uppercase tracking-wide">
+                Invalid Admin Credentials Provided
+            </div>
+            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-xl shadow-lg transition text-xs uppercase tracking-wider">
+                Authenticate Session
+            </button>
+        </form>
+    </div>
+
+    <!-- 3. MAIN ADMINISTRATIVE ID GENERATOR PANEL (Secured) -->
     <div id="generator-view-panel" class="hidden max-w-7xl mx-auto">
         <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-6 border-b border-slate-800">
             <div>
@@ -147,8 +174,8 @@
             <div class="flex items-center gap-3 mt-4 md:mt-0 bg-slate-900/80 p-3 rounded-lg border border-slate-800">
                 <i class="fa-solid fa-user-shield text-emerald-500 text-xl"></i>
                 <div>
-                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Console Mode</p>
-                    <p class="text-sm font-semibold text-emerald-400">Direct Administration Access</p>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Admin Email</p>
+                    <p class="text-sm font-semibold text-slate-200">malabubakarmohammed679@gmail.com</p>
                 </div>
             </div>
         </header>
@@ -286,10 +313,10 @@
         const urlParams = new URLSearchParams(window.location.search);
         
         const valPanel = document.getElementById('validation-view-panel');
+        const loginPanel = document.getElementById('login-view-panel');
         const genPanel = document.getElementById('generator-view-panel');
 
         if (urlParams.has('verify') && urlParams.get('verify') === 'true') {
-            // If scanning a QR code, show verification screen
             valPanel.classList.remove('hidden');
             document.body.classList.replace('bg-[#0b0f19]', 'bg-[#070a13]');
             
@@ -298,9 +325,26 @@
             document.getElementById('v-issue').innerText = urlParams.get('issued') || 'UNKNOWN';
             document.getElementById('v-expire').innerText = urlParams.get('expires') || 'UNKNOWN';
         } else {
-            // Go straight to the dashboard generator securely
-            genPanel.classList.remove('hidden');
-            initializeGenerator();
+            loginPanel.classList.remove('hidden');
+            
+            const targetUser = "malabubakarmohammed679@gmail.com";
+            const targetPass = "Admin@Taraba2026";
+
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const emailInput = document.getElementById('login-email').value.trim();
+                const passInput = document.getElementById('login-password').value.trim();
+                const errorMsg = document.getElementById('login-error-message');
+
+                // Case-insensitive check on email, and exact check on passkey
+                if (emailInput.toLowerCase() === targetUser.toLowerCase() && passInput === targetPass) {
+                    loginPanel.remove();
+                    genPanel.classList.remove('hidden');
+                    initializeGenerator();
+                } else {
+                    errorMsg.classList.remove('hidden');
+                }
+            });
         }
 
         function initializeGenerator() {
