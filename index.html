@@ -362,18 +362,23 @@
             });
         }
 
-        // Processing high-resolution downloads
+        // Processing high-resolution downloads with explicit options to ensure full element layout configuration
         function downloadCardSide(elementId, sideName) {
             return new Promise((resolve) => {
                 const cardElement = document.getElementById(elementId);
                 const inputNameField = document.getElementById('input-name').value || 'Taskforce_Member';
                 const cleanFileName = inputNameField.toUpperCase().replace(/\s+/g, '_') + '_' + sideName;
 
+                // Enforce proper sizing metrics during render engine calculation
                 html2canvas(cardElement, {
                     scale: 2,
                     useCORS: true,
                     allowTaint: true,
-                    backgroundColor: null
+                    backgroundColor: null,
+                    width: 315,
+                    height: 480,
+                    windowWidth: 1200,
+                    windowHeight: 900
                 }).then(canvas => {
                     const link = document.createElement('a');
                     link.download = `${cleanFileName}.png`;
@@ -384,14 +389,16 @@
             });
         }
 
-        // Dual action button: Triggers background download process then presents browser printing layout
+        // Run images generation while screen is un-mutated, then open native printing layout cleanly
         function triggerPrintAndDownload() {
             downloadCardSide('capture-front', 'ID_Front').then(() => {
                 setTimeout(() => {
                     downloadCardSide('capture-back', 'ID_Back').then(() => {
-                        window.print();
+                        setTimeout(() => {
+                            window.print();
+                        }, 500); // Gives device a quick break to successfully write file buffers
                     });
-                }, 300); // Tiny pause between downloads so your device saves both separate files safely
+                }, 400); 
             });
         }
 
