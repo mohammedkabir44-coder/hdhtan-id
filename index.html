@@ -218,8 +218,8 @@
                         <input id="input-signature" type="file" accept="image/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-emerald-400 hover:file:bg-slate-700 cursor-pointer">
                     </div>
                     <div class="pt-4">
-                        <button onclick="window.print()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm uppercase tracking-wider">
-                            <i class="fa-solid fa-print"></i> Print Layout Page
+                        <button onclick="triggerPrintAndDownload()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm uppercase tracking-wider">
+                            <i class="fa-solid fa-print"></i> Print & Download Images
                         </button>
                     </div>
                 </div>
@@ -364,21 +364,34 @@
 
         // Processing high-resolution downloads
         function downloadCardSide(elementId, sideName) {
-            const cardElement = document.getElementById(elementId);
-            const inputNameField = document.getElementById('input-name').value || 'Taskforce_Member';
-            const cleanFileName = inputNameField.toUpperCase().replace(/\s+/g, '_') + '_' + sideName;
+            return new Promise((resolve) => {
+                const cardElement = document.getElementById(elementId);
+                const inputNameField = document.getElementById('input-name').value || 'Taskforce_Member';
+                const cleanFileName = inputNameField.toUpperCase().replace(/\s+/g, '_') + '_' + sideName;
 
-            // Render element as a canvas at double scale for clear printing quality
-            html2canvas(cardElement, {
-                scale: 2,
-                useCORS: true,
-                allowTaint: true,
-                backgroundColor: null
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `${cleanFileName}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
+                html2canvas(cardElement, {
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: null
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `${cleanFileName}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    resolve();
+                });
+            });
+        }
+
+        // Dual action button: Triggers background download process then presents browser printing layout
+        function triggerPrintAndDownload() {
+            downloadCardSide('capture-front', 'ID_Front').then(() => {
+                setTimeout(() => {
+                    downloadCardSide('capture-back', 'ID_Back').then(() => {
+                        window.print();
+                    });
+                }, 300); // Tiny pause between downloads so your device saves both separate files safely
             });
         }
 
