@@ -19,7 +19,6 @@
         h1, h2, h3, h4, .font-heading {
             font-family: 'Poppins', sans-serif;
         }
-        /* ENFORCED FIXED SIZE PROPERTIES FOR PHYSICAL PRINT METRICS */
         .id-card-wrapper {
             width: 315px !important;
             height: 480px !important;
@@ -49,14 +48,15 @@
         .flag-green { background-color: #15803d; width: 33.33%; height: 100%; }
         .flag-white { background-color: #ffffff; width: 33.34%; height: 100%; }
 
+        /* LARGE BACKGROUND SHADOW WATERMARK RE-ADDED */
         .watermark-bg {
             position: absolute;
-            top: 55%;
+            top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(1);
-            width: 200px;
-            height: 200px;
-            opacity: 0.08;
+            transform: translate(-50%, -50%) scale(1.1);
+            width: 220px;
+            height: 220px;
+            opacity: 0.07;
             pointer-events: none;
             z-index: 0;
         }
@@ -234,7 +234,6 @@
                     <i class="fa-solid fa-eye mr-1"></i> Live Document Preview Canvas
                 </div>
                 
-                <!-- Explicit CSS grid settings prevent browser viewport clipping on the back card -->
                 <div id="print-sheet-container" class="grid grid-cols-1 md:grid-cols-2 gap-8 p-4 bg-transparent w-full min-w-[320px] justify-items-center items-start">
                     
                     <!-- FRONT SIDE -->
@@ -245,13 +244,17 @@
                             <div class="flag-green"></div>
                         </div>
                         
+                        <!-- EMBEDDED HIGH RESOLUTION BACKGROUND VECTOR SHADOW -->
                         <div class="watermark-bg front-watermark flex items-center justify-center">
-                            <svg viewBox="0 0 100 100" class="w-full h-full text-emerald-800 opacity-20" fill="currentColor"><path d="M50 15 L80 35 L80 70 L50 90 L20 70 L20 35 Z M50 25 L70 40 L70 65 L50 80 L30 65 L30 40 Z"/></svg>
+                            <svg viewBox="0 0 100 100" class="w-full h-full text-emerald-800" fill="currentColor">
+                                <path d="M50,5 L85,25 L85,65 L50,95 L15,65 L15,25 Z" fill-opacity="0.12"/>
+                                <path d="M35,35 Q50,20 65,35 Q50,45 35,35 Z" fill-opacity="0.12"/>
+                                <path d="M35,55 Q50,40 65,55 Q50,65 35,55 Z" fill-opacity="0.12"/>
+                            </svg>
                         </div>
                         
                         <div class="text-center border-b border-emerald-800/20 pb-2 z-10 w-full">
                             <div class="brand-block-container">
-                                <!-- EMBEDDED INLINE COAT OF ARMS LOGO VECTOR DATA -->
                                 <div class="brand-logo-placement">
                                     <svg viewBox="0 0 100 100" class="w-full h-full text-[#15803d]" fill="currentColor">
                                         <path d="M50,5 L85,25 L85,65 L50,95 L15,65 L15,25 Z" fill="#15803d"/>
@@ -265,6 +268,8 @@
                                 <span class="brand-subtitle font-heading">IN COLLABORATION WITH FEDERAL GOVERNMENT (PPP)</span>
                             </div>
                             <h3 class="text-[10px] font-black text-slate-950 uppercase tracking-tight px-1 mt-2 mb-1" style="line-height: 1.2;">special taskforce against economic sabotage and multiple taxation</h3>
+                            
+                            <!-- RESTORED FORMER POSITIONING DESIGN ELEMENT -->
                             <p class="text-[9px] font-black text-red-600 uppercase tracking-widest bg-slate-100 py-0.5 rounded font-heading" style="line-height: 1.1; display: block;">presidential order-001</p>
                         </div>
 
@@ -293,8 +298,13 @@
 
                     <!-- BACK SIDE -->
                     <div id="capture-back" class="id-card-wrapper p-4 relative">
+                        <!-- EMBEDDED BACKING DESIGN WATERMARK GRAPHIC -->
                         <div class="watermark-bg flex items-center justify-center">
-                            <svg viewBox="0 0 100 100" class="w-full h-full text-emerald-800 opacity-20" fill="currentColor"><path d="M50 15 L80 35 L80 70 L50 90 L20 70 L20 35 Z M50 25 L70 40 L70 65 L50 80 L30 65 L30 40 Z"/></svg>
+                            <svg viewBox="0 0 100 100" class="w-full h-full text-emerald-800" fill="currentColor">
+                                <path d="M50,5 L85,25 L85,65 L50,95 L15,65 L15,25 Z" fill-opacity="0.12"/>
+                                <path d="M35,35 Q50,20 65,35 Q50,45 35,35 Z" fill-opacity="0.12"/>
+                                <path d="M35,55 Q50,40 65,55 Q50,65 35,55 Z" fill-opacity="0.12"/>
+                            </svg>
                         </div>
                         
                         <div class="text-center border-b border-red-600/20 pb-2 z-10 w-full">
