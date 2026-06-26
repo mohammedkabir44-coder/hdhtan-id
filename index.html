@@ -3,464 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HDHTAN Taraba - Official ID & Verification Gate</title>
+    <title>HDHTAN ID System & QR Validator</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background-color: #0b0f19;
-            color: #f1f5f9;
+        body { font-family: 'Poppins', sans-serif; background-color: #0f172a; }
+        .id-card { 
+            width: 320px; height: 500px; background: white; border-radius: 12px; 
+            position: relative; overflow: hidden; border: 1px solid #e2e8f0;
+            display: flex; flex-direction: column;
         }
-        h1, h2, h3, h4, .font-heading {
-            font-family: 'Poppins', sans-serif;
-        }
-        .id-card-wrapper {
-            width: 315px !important;
-            height: 480px !important;
-            border-radius: 14px !important;
-            position: relative !important;
-            overflow: hidden !important;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5) !important;
-            background: #ffffff !important;
-            color: #1e293b !important;
-            border: 1px solid #cbd5e1 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: space-between !important;
-            box-sizing: border-box !important;
-            flex-shrink: 0 !important;
-        }
-        .vertical-flag-ruler {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 24px;
-            height: 100%;
-            display: flex;
-            flex-direction: row;
-            z-index: 30;
-        }
-        .flag-green { background-color: #15803d; width: 33.33%; height: 100%; }
-        .flag-white { background-color: #ffffff; width: 33.34%; height: 100%; }
-
-        /* LARGE BACKGROUND SHADOW WATERMARK RE-ADDED */
-        .watermark-bg {
+        /* WATERMARK STYLE */
+        .watermark {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(1.1);
-            width: 220px;
-            height: 220px;
-            opacity: 0.07;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 250px;
+            opacity: 0.15; /* Restored visibility */
+            z-index: 1;
             pointer-events: none;
-            z-index: 0;
         }
-        .front-watermark { left: 54%; }
-        
-        .red-outline-box {
-            background-color: transparent !important;
-            border: 2px solid #dc2626;
-            border-radius: 8px;
-            padding: 10px;
-            position: relative;
-            z-index: 10;
-            display: block;
-            width: 100%;
-        }
-        .card-label {
-            font-size: 9px;
-            font-weight: 800;
-            color: #dc2626;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 2px;
-        }
-        .card-value {
-            font-size: 14px;
-            font-weight: 700;
-            color: #0f172a;
-            text-transform: uppercase;
-            min-height: 22px;
-            line-height: 1.3 !important;
-            display: block;
-            word-wrap: break-word;
-        }
-        
-        .brand-block-container {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding-left: 46px;
-            position: relative;
-        }
-        .brand-logo-placement {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .brand-title {
-            font-size: 26px !important;
-            font-weight: 800 !important;
-            color: #115e59 !important; 
-            letter-spacing: -0.02em !important;
-            line-height: 1.0 !important;
-            display: block;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-        .brand-subtitle {
-            font-size: 5.6px !important; 
-            font-weight: 800 !important;
-            color: #dc2626 !important; 
-            letter-spacing: -0.01em !important;
-            line-height: 1.1 !important;
-            display: block !important;
-            margin-top: 8px !important;
-            white-space: nowrap !important; 
-        }
+        .content-layer { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="p-10">
 
-    <!-- 1. LIVE PUBLIC SCANNER VALIDATOR SCREEN -->
-    <div id="validation-view-panel" class="hidden max-w-md mx-auto my-12 bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center shadow-2xl">
-        <div class="w-20 h-20 bg-emerald-500/10 border border-emerald-500/30 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i class="fa-solid fa-shield-check text-emerald-500 text-4xl"></i>
-        </div>
-        <span class="text-emerald-500 font-bold tracking-widest text-xs uppercase bg-emerald-500/10 px-4 py-1.5 rounded-full border border-emerald-500/20">
-            <i class="fa-solid fa-circle-check mr-1"></i> Official HDHTAN Verification Passed
-        </span>
+    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
         
-        <h2 class="text-2xl font-extrabold text-white mt-6 mb-1 uppercase font-heading tracking-tight">NATIONAL TASKFORCE MEMBER</h2>
-        <p class="text-xs text-red-500 font-bold tracking-widest uppercase">Presidential Order-001</p>
-
-        <div class="mt-6 border-t border-b border-slate-800/80 py-4 my-4 space-y-3 text-left">
-            <div>
-                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Personnel Name</p>
-                <p id="v-name" class="text-lg font-bold text-slate-100 uppercase">-</p>
-            </div>
-            <div>
-                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Rank / Assignment</p>
-                <p id="v-position" class="text-md font-bold text-emerald-400 uppercase">-</p>
-            </div>
-            <div class="grid grid-cols-2 gap-4 pt-1">
-                <div>
-                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Issued Date</p>
-                    <p id="v-issue" class="text-sm font-semibold text-slate-300">-</p>
-                </div>
-                <div>
-                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Expiration Date</p>
-                    <p id="v-expire" class="text-sm font-bold text-red-400">-</p>
-                </div>
-            </div>
+        <!-- CONTROL PANEL -->
+        <div class="bg-slate-800 p-6 rounded-xl text-white">
+            <h2 class="text-xl font-bold mb-4">Card Configuration</h2>
+            <input id="in-name" type="text" placeholder="Full Name" class="w-full p-2 mb-2 rounded bg-slate-900 border border-slate-700">
+            <input id="in-pos" type="text" placeholder="Rank/Position" class="w-full p-2 mb-2 rounded bg-slate-900 border border-slate-700">
+            <button onclick="window.print()" class="w-full bg-emerald-600 py-2 mt-4 rounded font-bold hover:bg-emerald-500">Export as PDF/Print</button>
         </div>
-    </div>
 
-    <!-- 2. MAIN ADMINISTRATIVE ID GENERATOR PANEL -->
-    <div id="generator-view-panel" class="block max-w-7xl mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-6 border-b border-slate-800">
-            <div>
-                <span class="text-emerald-500 font-semibold tracking-wider text-xs uppercase bg-emerald-500/10 px-3 py-1 rounded-full">
-                    <i class="fa-solid fa-qrcode mr-1"></i> Custom Taskforce Operational Layout
-                </span>
-                <h1 class="text-3xl font-bold mt-2 text-white">HDHTAN ID System & QR Validator</h1>
-                <p class="text-slate-400 text-sm mt-1">Configure, preview, and export print sheets with standard formatting rules.</p>
-            </div>
-            <div class="flex items-center gap-3 mt-4 md:mt-0 bg-slate-900/80 p-3 rounded-lg border border-slate-800">
-                <i class="fa-solid fa-user-shield text-emerald-500 text-xl"></i>
-                <div>
-                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Admin Email</p>
-                    <p class="text-sm font-semibold text-slate-200">malabubakarmohammed679@gmail.com</p>
+        <!-- PREVIEW -->
+        <div class="flex gap-4">
+            <!-- FRONT -->
+            <div id="front" class="id-card p-4">
+                <div class="watermark">
+                    <svg viewBox="0 0 100 100" fill="#15803d"><path d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z"/></svg>
                 </div>
-            </div>
-        </header>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <!-- INPUT FORM CONTROLS -->
-            <div class="lg:col-span-5 bg-slate-900/60 p-6 rounded-2xl border border-slate-800/80 backdrop-blur-sm h-fit">
-                <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
-                    <i class="fa-solid fa-sliders text-emerald-500"></i> Card Customization Controls
-                </h3>
-                
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Full Member Name</label>
-                        <input id="input-name" type="text" value="ABUBAKAR MOHAMMED" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
+                <div class="content-layer">
+                    <div class="text-center border-b pb-2">
+                        <h1 class="text-xl font-extrabold text-emerald-900">HDHTAN</h1>
+                        <p class="text-[8px] font-bold uppercase text-red-600">In Collaboration with Federal Government (PPP)</p>
+                        <p class="text-[9px] font-bold uppercase bg-slate-100 mt-2 px-1 rounded">Presidential Order-001</p>
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Official Position / Rank</label>
-                        <input id="input-position" type="text" value="ADMIN" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Issue Date</label>
-                            <input id="input-issue" type="text" value="01/01/2026" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Expiry Date</label>
-                            <input id="input-expire" type="text" value="31/12/2026" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Upload Passport Photo</label>
-                        <input id="input-image" type="file" accept="image/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-emerald-400 hover:file:bg-slate-700 cursor-pointer">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Upload Signature Image</label>
-                        <input id="input-signature" type="file" accept="image/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-emerald-400 hover:file:bg-slate-700 cursor-pointer">
-                    </div>
-                    <div class="pt-4">
-                        <button onclick="downloadPrintPagePNG()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm uppercase tracking-wider">
-                            <i class="fa-solid fa-download"></i> Download Print Page (PNG)
-                        </button>
+                    <div class="flex-grow flex flex-col items-center justify-center">
+                        <div class="w-24 h-24 bg-slate-200 rounded border-2 border-emerald-800 mb-4"></div>
+                        <h3 id="out-name" class="font-bold text-lg uppercase">ABUBAKAR MOHAMMED</h3>
+                        <p id="out-pos" class="text-emerald-700 font-semibold uppercase">ADMIN</p>
                     </div>
                 </div>
             </div>
 
-            <!-- LIVE PREVIEW VIEWPORT AREA -->
-            <div class="lg:col-span-7 flex flex-col items-center bg-slate-950/40 p-6 rounded-2xl border border-slate-800 w-full overflow-hidden">
-                <div class="text-xs text-slate-500 font-bold tracking-wider mb-6 uppercase">
-                    <i class="fa-solid fa-eye mr-1"></i> Live Document Preview Canvas
+            <!-- BACK -->
+            <div id="back" class="id-card p-4">
+                <div class="watermark">
+                    <svg viewBox="0 0 100 100" fill="#15803d"><path d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z"/></svg>
                 </div>
-                
-                <div id="print-sheet-container" class="grid grid-cols-1 md:grid-cols-2 gap-8 p-4 bg-transparent w-full min-w-[320px] justify-items-center items-start">
-                    
-                    <!-- FRONT SIDE -->
-                    <div id="capture-front" class="id-card-wrapper p-4 pl-9 relative">
-                        <div class="vertical-flag-ruler">
-                            <div class="flag-green"></div>
-                            <div class="flag-white"></div>
-                            <div class="flag-green"></div>
-                        </div>
-                        
-                        <!-- EMBEDDED HIGH RESOLUTION BACKGROUND VECTOR SHADOW -->
-                        <div class="watermark-bg front-watermark flex items-center justify-center">
-                            <svg viewBox="0 0 100 100" class="w-full h-full text-emerald-800" fill="currentColor">
-                                <path d="M50,5 L85,25 L85,65 L50,95 L15,65 L15,25 Z" fill-opacity="0.12"/>
-                                <path d="M35,35 Q50,20 65,35 Q50,45 35,35 Z" fill-opacity="0.12"/>
-                                <path d="M35,55 Q50,40 65,55 Q50,65 35,55 Z" fill-opacity="0.12"/>
-                            </svg>
-                        </div>
-                        
-                        <div class="text-center border-b border-emerald-800/20 pb-2 z-10 w-full">
-                            <div class="brand-block-container">
-                                <div class="brand-logo-placement">
-                                    <svg viewBox="0 0 100 100" class="w-full h-full text-[#15803d]" fill="currentColor">
-                                        <path d="M50,5 L85,25 L85,65 L50,95 L15,65 L15,25 Z" fill="#15803d"/>
-                                        <path d="M50,12 L78,30 L78,60 L50,86 L22,60 L22,30 Z" fill="#ffffff"/>
-                                        <path d="M35,35 Q50,20 65,35 Q50,45 35,35 Z" fill="#15803d"/>
-                                        <path d="M35,55 Q50,40 65,55 Q50,65 35,55 Z" fill="#15803d"/>
-                                        <circle cx="50" cy="45" r="5" fill="#dc2626"/>
-                                    </svg>
-                                </div>
-                                <span class="brand-title font-heading">HDHTAN</span>
-                                <span class="brand-subtitle font-heading">IN COLLABORATION WITH FEDERAL GOVERNMENT (PPP)</span>
-                            </div>
-                            <h3 class="text-[10px] font-black text-slate-950 uppercase tracking-tight px-1 mt-2 mb-1" style="line-height: 1.2;">special taskforce against economic sabotage and multiple taxation</h3>
-                            
-                            <!-- RESTORED FORMER POSITIONING DESIGN ELEMENT -->
-                            <p class="text-[9px] font-black text-red-600 uppercase tracking-widest bg-slate-100 py-0.5 rounded font-heading" style="line-height: 1.1; display: block;">presidential order-001</p>
-                        </div>
-
-                        <div class="flex flex-col flex-1 my-2 justify-between z-10 w-full">
-                            <div class="w-24 h-26 border-2 border-emerald-700 rounded bg-slate-100 overflow-hidden shadow-sm relative mx-auto mb-2">
-                                <img id="card-photo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f1f5f9'/><circle cx='50' cy='40' r='20' fill='%23cbd5e1'/><path d='M20,90 C20,70 80,70 80,90' fill='%23cbd5e1'/></svg>" alt="Member Passport" class="w-full h-full object-cover">
-                            </div>
-                            <div class="red-outline-box space-y-2 w-full px-2.5 text-center">
-                                <div class="block">
-                                    <span class="card-label">NAME:</span>
-                                    <span id="card-name" class="card-value font-bold tracking-wide">ABUBAKAR MOHAMMED</span>
-                                </div>
-                                <div class="block">
-                                    <span class="card-label">RANK / POSITION:</span>
-                                    <span id="card-position" class="card-value font-bold tracking-wide text-emerald-800">ADMIN</span>
-                                </div>
-                                <div class="block">
-                                    <span class="card-label">HOLDER'S SIGN:</span>
-                                    <div class="h-8 w-full mt-0.5 flex items-center justify-center border-b border-dashed border-slate-300">
-                                        <img id="card-sign" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='30'></svg>" alt="" class="max-h-full object-contain max-w-[180px]">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BACK SIDE -->
-                    <div id="capture-back" class="id-card-wrapper p-4 relative">
-                        <!-- EMBEDDED BACKING DESIGN WATERMARK GRAPHIC -->
-                        <div class="watermark-bg flex items-center justify-center">
-                            <svg viewBox="0 0 100 100" class="w-full h-full text-emerald-800" fill="currentColor">
-                                <path d="M50,5 L85,25 L85,65 L50,95 L15,65 L15,25 Z" fill-opacity="0.12"/>
-                                <path d="M35,35 Q50,20 65,35 Q50,45 35,35 Z" fill-opacity="0.12"/>
-                                <path d="M35,55 Q50,40 65,55 Q50,65 35,55 Z" fill-opacity="0.12"/>
-                            </svg>
-                        </div>
-                        
-                        <div class="text-center border-b border-red-600/20 pb-2 z-10 w-full">
-                            <span class="text-[12px] font-black text-red-600 uppercase tracking-wider block font-heading" style="line-height: 1.3;">HDHTAN SPECIAL TASKFORCE<br>TARABA STATE</span>
-                        </div>
-                        <div class="flex flex-col justify-between flex-1 my-2 px-2 text-center z-10 w-full">
-                            <div class="mt-4">
-                                <p class="text-[11px] text-slate-700 font-bold uppercase" style="line-height: 1.4;">
-                                    If lost call <span class="text-emerald-700 font-extrabold block text-[14px] my-1" style="line-height: 1.2;">08106295277</span> or return to the nearest police station.
-                                </p>
-                            </div>
-                            <div class="my-2 flex flex-col items-center justify-center">
-                                <div class="w-20 h-20 bg-white p-1 border border-slate-200 rounded-lg shadow-sm">
-                                    <img id="card-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Pending" alt="Verification QR Code" class="w-full h-full object-contain">
-                                </div>
-                                <span class="text-[6px] font-black text-emerald-800 tracking-wider uppercase mt-1" style="line-height: 1.1;">
-                                    <i class="fa-solid fa-qrcode mr-0.5"></i> SECURE SCANNER VALIDATION
-                                </span>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4 w-full border-t border-slate-100 pt-2 text-left">
-                                <div class="block">
-                                    <span class="card-label !text-emerald-800">ISSUE DATE:</span>
-                                    <span id="card-issue" class="card-value font-mono text-[11px] !text-slate-900">01/01/2026</span>
-                                </div>
-                                <div class="block">
-                                    <span class="card-label !text-emerald-800">EXPIRE DATE:</span>
-                                    <span id="card-expire" class="card-value font-mono text-[11px] !text-red-600 font-bold">31/12/2026</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-[6.5px] text-slate-400 text-center border-t border-slate-100 pt-1 z-10 w-full" style="line-height: 1.1;">Official National Anti-Sabotage Monitoring Identity Document © 2026.</div>
-                    </div>
-                    
+                <div class="content-layer justify-between">
+                    <div class="text-center font-bold text-red-700 text-sm">HDHTAN SPECIAL TASKFORCE</div>
+                    <div class="text-center text-xs text-slate-600">If found, please return to the nearest police station or contact HQ.</div>
+                    <div class="text-center text-[10px] text-slate-400">© 2026 Official Identity</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const valPanel = document.getElementById('validation-view-panel');
-        const genPanel = document.getElementById('generator-view-panel');
-
-        if (urlParams.has('verify') && urlParams.get('verify') === 'true') {
-            genPanel.style.display = 'none';
-            valPanel.classList.remove('hidden');
-            document.body.classList.replace('bg-[#0b0f19]', 'bg-[#070a13]');
-            
-            document.getElementById('v-name').innerText = urlParams.get('name') || 'UNKNOWN';
-            document.getElementById('v-position').innerText = urlParams.get('pos') || 'UNKNOWN';
-            document.getElementById('v-issue').innerText = urlParams.get('issued') || 'UNKNOWN';
-            document.getElementById('v-expire').innerText = urlParams.get('expires') || 'UNKNOWN';
-        } else {
-            initializeGenerator();
-        }
-
-        function downloadPrintPagePNG() {
-            const printContainer = document.getElementById('print-sheet-container');
-            const inputNameField = document.getElementById('input-name').value || 'Taskforce_Member';
-            const cleanFileName = inputNameField.toUpperCase().replace(/\s+/g, '_') + '_PRINT_PAGE';
-
-            const sheetClone = printContainer.cloneNode(true);
-            sheetClone.style.position = 'fixed';
-            sheetClone.style.top = '0px';
-            sheetClone.style.left = '0px';
-            sheetClone.style.zIndex = '-99999';
-            sheetClone.style.display = 'flex';
-            sheetClone.style.flexDirection = 'row';
-            sheetClone.style.gap = '24px';
-            sheetClone.style.padding = '30px';
-            sheetClone.style.backgroundColor = '#ffffff'; 
-            document.body.appendChild(sheetClone);
-
-            sheetClone.querySelectorAll('.id-card-wrapper').forEach(card => {
-                card.style.boxShadow = 'none';
-                card.style.transform = 'none';
-                card.style.display = 'flex';
-                card.style.width = '315px';
-                card.style.height = '480px';
-            });
-
-            setTimeout(() => {
-                html2canvas(sheetClone, {
-                    scale: 3, 
-                    useCORS: true,
-                    allowTaint: true,
-                    backgroundColor: "#ffffff",
-                    logging: false
-                }).then(canvas => {
-                    const link = document.createElement('a');
-                    link.download = `${cleanFileName}.png`;
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                    sheetClone.remove();
-                });
-            }, 200);
-        }
-
-        function initializeGenerator() {
-            const inputName = document.getElementById('input-name');
-            const inputPosition = document.getElementById('input-position');
-            const inputIssue = document.getElementById('input-issue');
-            const inputExpire = document.getElementById('input-expire');
-            const inputImage = document.getElementById('input-image');
-            const inputSignature = document.getElementById('input-signature');
-
-            const cardName = document.getElementById('card-name');
-            const cardPosition = document.getElementById('card-position');
-            const cardIssue = document.getElementById('card-issue');
-            const cardExpire = document.getElementById('card-expire');
-            const cardPhoto = document.getElementById('card-photo');
-            const cardSign = document.getElementById('card-sign');
-            const cardQr = document.getElementById('card-qr');
-
-            function updateCardText() {
-                const nameVal = inputName.value.toUpperCase() || "MEMBER NAME";
-                const posVal = inputPosition.value.toUpperCase() || "OPERATIONAL POSITION";
-                const issueVal = inputIssue.value || "01/01/2026";
-                const expireVal = inputExpire.value || "31/12/2026";
-
-                cardName.innerText = nameVal;
-                cardPosition.innerText = posVal;
-                cardIssue.innerText = issueVal;
-                cardExpire.innerText = expireVal;
-
-                const baseUrl = window.location.href.split('?')[0];
-                const verificationUrl = `${baseUrl}?verify=true&name=${encodeURIComponent(nameVal)}&pos=${encodeURIComponent(posVal)}&issued=${encodeURIComponent(issueVal)}&expires=${encodeURIComponent(expireVal)}`;
-                
-                cardQr.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verificationUrl)}`;
-            }
-
-            inputName.addEventListener('input', updateCardText);
-            inputPosition.addEventListener('input', updateCardText);
-            inputIssue.addEventListener('input', updateCardText);
-            inputExpire.addEventListener('input', updateCardText);
-
-            inputImage.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(event) { cardPhoto.src = event.target.result; };
-                    reader.readAsDataURL(file);
-                }
-            });
-
-            inputSignature.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(event) { cardSign.src = event.target.result; };
-                    reader.readAsDataURL(file);
-                }
-            });
-            
-            updateCardText();
-        }
+        document.getElementById('in-name').addEventListener('input', (e) => document.getElementById('out-name').innerText = e.target.value);
+        document.getElementById('in-pos').addEventListener('input', (e) => document.getElementById('out-pos').innerText = e.target.value);
     </script>
 </body>
 </html>
