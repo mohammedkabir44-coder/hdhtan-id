@@ -123,7 +123,7 @@
             letter-spacing: -0.01em !important;
             line-height: 1.1 !important;
             display: block !important;
-            margin-top: 8px !important; /* Permanent exact spacing gap matching template 3 layout */
+            margin-top: 8px !important; /* Permanent explicit layout spacing gap */
             white-space: nowrap !important; 
         }
     </style>
@@ -202,7 +202,7 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Issue Date</label>
-                            <input id="input-issue" type="text" placeholder="DD/MM/YYYY" class="w-full bg-slate-950 border border-slate-800 hrs rounded-lg px-4 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
+                            <input id="input-issue" type="text" placeholder="DD/MM/YYYY" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Expiry Date</label>
@@ -218,159 +218,4 @@
                         <input id="input-signature" type="file" accept="image/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-emerald-400 hover:file:bg-slate-700 cursor-pointer">
                     </div>
                     <div class="pt-4">
-                        <button onclick="downloadPrintPagePNG()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm uppercase tracking-wider">
-                            <i class="fa-solid fa-download"></i> Download Print Page (PNG)
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-7 flex flex-col md:flex-row items-center justify-center gap-8 w-full">
-                <div id="print-sheet-container" class="flex flex-col md:flex-row gap-6 p-4 bg-transparent rounded-xl">
-                    <div id="capture-front" class="id-card-wrapper flex flex-col justify-between p-4 pl-9 bg-white text-slate-800 relative">
-                        <div class="vertical-flag-ruler">
-                            <div class="flag-green"></div>
-                            <div class="flag-white"></div>
-                            <div class="flag-green"></div>
-                        </div>
-                        <img src="hdhtan logo.jpg" alt="HDHTAN Watermark" class="watermark-bg front-watermark">
-                        
-                        <div class="text-center border-b border-emerald-800/20 pb-2 z-10 w-full">
-                            <div class="brand-block-container">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Coat_of_arms_of_Nigeria.svg" alt="Coat of Arms" class="brand-logo-placement">
-                                <span class="brand-title font-heading">HDHTAN</span>
-                                <span class="brand-subtitle font-heading">IN COLLABORATION WITH FEDERAL GOVERNMENT (PPP)</span>
-                            </div>
-                            <h3 class="text-[10px] font-black text-slate-950 uppercase tracking-tight px-1 mt-2 mb-1" style="line-height: 1.2;">special taskforce against economic sabotage and multiple taxation</h3>
-                            <p class="text-[9px] font-black text-red-600 uppercase tracking-widest bg-slate-100 py-0.5 rounded font-heading" style="line-height: 1.1; display: block;">presidential order-001</p>
-                        </div>
-
-                        <div class="flex flex-col flex-1 my-2 justify-between z-10 w-full">
-                            <div class="w-24 h-26 border-2 border-emerald-700 rounded bg-slate-100 overflow-hidden shadow-sm relative mx-auto mb-2">
-                                <img id="card-photo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f1f5f9'/><circle cx='50' cy='40' r='20' fill='%23cbd5e1'/><path d='M20,90 C20,70 80,70 80,90' fill='%23cbd5e1'/></svg>" alt="Member Passport" class="w-full h-full object-cover">
-                            </div>
-                            <div class="red-outline-box space-y-2 w-full px-2.5 text-center">
-                                <div class="block">
-                                    <span class="card-label">NAME:</span>
-                                    <span id="card-name" class="card-value font-bold tracking-wide"></span>
-                                </div>
-                                <div class="block">
-                                    <span class="card-label">RANK / POSITION:</span>
-                                    <span id="card-position" class="card-value font-bold tracking-wide text-emerald-800"></span>
-                                </div>
-                                <div class="block">
-                                    <span class="card-label">HOLDER'S SIGN:</span>
-                                    <div class="h-8 w-full mt-0.5 flex items-center justify-center border-b border-dashed border-slate-300">
-                                        <img id="card-sign" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='30'></svg>" alt="" class="max-h-full object-contain max-w-[180px]">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="capture-back" class="id-card-wrapper flex flex-col justify-between p-4 bg-white text-slate-800 relative">
-                        <img src="hdhtan logo.jpg" alt="HDHTAN Watermark" class="watermark-bg">
-                        <div class="text-center border-b border-red-600/20 pb-2 z-10 w-full">
-                            <span class="text-[12px] font-black text-red-600 uppercase tracking-wider block font-heading" style="line-height: 1.3;">HDHTAN SPECIAL TASKFORCE<br>TARABA STATE</span>
-                        </div>
-                        <div class="flex flex-col justify-between flex-1 my-2 px-2 text-center z-10 w-full">
-                            <div class="mt-4">
-                                <p class="text-[11px] text-slate-700 font-bold uppercase" style="line-height: 1.4;">
-                                    If lost call <span class="text-emerald-700 font-extrabold block text-[14px] my-1" style="line-height: 1.2;">08106295277</span> or return to the nearest police station.
-                                </p>
-                            </div>
-                            <div class="my-2 flex flex-col items-center justify-center">
-                                <div class="w-20 h-20 bg-white p-1 border border-slate-200 rounded-lg shadow-sm">
-                                    <img id="card-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Pending" alt="Verification QR Code" class="w-full h-full object-contain">
-                                </div>
-                                <span class="text-[6px] font-black text-emerald-800 tracking-wider uppercase mt-1" style="line-height: 1.1;">
-                                    <i class="fa-solid fa-qrcode mr-0.5"></i> SECURE SCANNER VALIDATION
-                                </span>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4 w-full border-t border-slate-100 pt-2 text-left">
-                                <div class="block">
-                                    <span class="card-label !text-emerald-800">ISSUE DATE:</span>
-                                    <span id="card-issue" class="card-value font-mono text-[11px] !text-slate-900"></span>
-                                </div>
-                                <div class="block">
-                                    <span class="card-label !text-emerald-800">EXPIRE DATE:</span>
-                                    <span id="card-expire" class="card-value font-mono text-[11px] !text-red-600 font-bold"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-[6.5px] text-slate-400 text-center border-t border-slate-100 pt-1 z-10 w-full" style="line-height: 1.1;">Official National Anti-Sabotage Monitoring Identity Document © 2026.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        
-        const valPanel = document.getElementById('validation-view-panel');
-        const genPanel = document.getElementById('generator-view-panel');
-
-        if (urlParams.has('verify') && urlParams.get('verify') === 'true') {
-            genPanel.classList.add('hidden');
-            valPanel.classList.remove('hidden');
-            document.body.classList.replace('bg-[#0b0f19]', 'bg-[#070a13]');
-            
-            document.getElementById('v-name').innerText = urlParams.get('name') || 'UNKNOWN';
-            document.getElementById('v-position').innerText = urlParams.get('pos') || 'UNKNOWN';
-            document.getElementById('v-issue').innerText = urlParams.get('issued') || 'UNKNOWN';
-            document.getElementById('v-expire').innerText = urlParams.get('expires') || 'UNKNOWN';
-        } else {
-            initializeGenerator();
-        }
-
-        function downloadPrintPagePNG() {
-            const printContainer = document.getElementById('print-sheet-container');
-            const inputNameField = document.getElementById('input-name').value || 'Taskforce_Member';
-            const cleanFileName = inputNameField.toUpperCase().replace(/\s+/g, '_') + '_PRINT_PAGE';
-
-            const sheetClone = printContainer.cloneNode(true);
-            sheetClone.style.position = 'fixed';
-            sheetClone.style.top = '0px';
-            sheetClone.style.left = '0px';
-            sheetClone.style.zIndex = '-99999';
-            sheetClone.style.display = 'flex';
-            sheetClone.style.flexDirection = 'row';
-            sheetClone.style.gap = '24px';
-            sheetClone.style.padding = '30px';
-            sheetClone.style.backgroundColor = '#ffffff'; 
-            document.body.appendChild(sheetClone);
-
-            // Re-enforce layout style parameters on export nodes so HTML2Canvas captures spacing accurately
-            sheetClone.querySelectorAll('.brand-subtitle').forEach(subtitle => {
-                subtitle.style.setProperty('margin-top', '8px', 'important');
-                subtitle.style.setProperty('display', 'block', 'important');
-            });
-
-            sheetClone.querySelectorAll('.id-card-wrapper').forEach(card => {
-                card.style.boxShadow = 'none';
-                card.style.transform = 'none';
-                card.style.display = 'block';
-            });
-
-            setTimeout(() => {
-                html2canvas(sheetClone, {
-                    scale: 3, 
-                    useCORS: true,
-                    allowTaint: true,
-                    backgroundColor: "#ffffff",
-                    logging: false
-                }).then(canvas => {
-                    const link = document.createElement('a');
-                    link.download = `${cleanFileName}.png`;
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                    sheetClone.remove();
-                });
-            }, 150);
-        }
-
-        function initializeGenerator() {
-            const inputName = document.getElementById('input-name');
-            const inputPosition = document.getElementById('input-position');
-            const inputIssue = document.getElementById('
+                        <button onclick="downloadPrintPagePNG()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition flex items
