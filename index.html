@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Engine for full canvas rendering -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         body {
@@ -68,6 +69,8 @@
             padding: 10px;
             position: relative;
             z-index: 10;
+            display: block;
+            width: 100%;
         }
         .card-label {
             font-size: 9px;
@@ -75,18 +78,43 @@
             color: #dc2626;
             letter-spacing: 0.04em;
             text-transform: uppercase;
+            display: block;
+            margin-bottom: 2px;
         }
         .card-value {
             font-size: 14px;
             font-weight: 700;
             color: #0f172a;
             text-transform: uppercase;
-            min-height: 20px;
+            min-height: 22px;
+            line-height: 1.3 !important;
+            display: block;
+            word-wrap: break-word;
+        }
+        
+        /* High contrast header fixes to safeguard crystal-clear image compilation rendering */
+        .brand-title {
+            font-size: 26px !important;
+            font-weight: 800 !important;
+            color: #166534 !important; /* Rich green */
+            letter-spacing: -0.03em !important;
+            line-height: 1.1 !important;
+            display: block;
+        }
+        .brand-subtitle {
+            font-size: 8px !important;
+            font-weight: 800 !important;
+            color: #dc2626 !important; /* Clear deep red */
+            letter-spacing: -0.01em !important;
+            line-height: 1.2 !important;
+            display: block;
+            margin-top: 2px !important;
         }
     </style>
 </head>
 <body class="p-4 md:p-8">
 
+    <!-- 1. LIVE PUBLIC SCANNER VALIDATOR SCREEN -->
     <div id="validation-view-panel" class="hidden max-w-md mx-auto my-12 bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center shadow-2xl">
         <div class="w-20 h-20 bg-emerald-500/10 border border-emerald-500/30 rounded-full flex items-center justify-center mx-auto mb-4">
             <i class="fa-solid fa-shield-check text-emerald-500 text-4xl"></i>
@@ -123,6 +151,7 @@
         </p>
     </div>
 
+    <!-- 2. ADMIN PORTAL LOGIN INTERFACE -->
     <div id="login-view-panel" class="hidden max-w-md mx-auto my-16 bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl">
         <div class="text-center mb-6">
             <div class="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-3 border border-emerald-500/20">
@@ -149,6 +178,7 @@
         </form>
     </div>
 
+    <!-- 3. MAIN ADMINISTRATIVE ID GENERATOR PANEL -->
     <div id="generator-view-panel" class="hidden max-w-7xl mx-auto">
         <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-6 border-b border-slate-800">
             <div>
@@ -210,6 +240,7 @@
 
             <div class="lg:col-span-7 flex flex-col md:flex-row items-center justify-center gap-8 w-full">
                 <div id="print-sheet-container" class="flex flex-col md:flex-row gap-6 p-4 bg-transparent rounded-xl">
+                    <!-- FRONT SIDE -->
                     <div id="capture-front" class="id-card-wrapper flex flex-col justify-between p-4 pl-9 bg-white text-slate-800 relative">
                         <div class="vertical-flag-ruler">
                             <div class="flag-green"></div>
@@ -218,35 +249,38 @@
                         </div>
                         <img src="hdhtan logo.jpg" alt="HDHTAN Watermark" class="watermark-bg front-watermark">
                         
+                        <!-- Header rebuilt using static text alignment vectors for high definition rendering -->
                         <div class="text-center border-b border-emerald-800/20 pb-2 z-10 w-full">
-                            <div class="flex items-center justify-center gap-1.5 w-full">
-                                <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Coat_of_arms_of_Nigeria.svg" alt="Coat of Arms" class="w-full h-full object-contain">
-                                </div>
-                                <div class="flex flex-col items-start text-left leading-none">
-                                    <h2 class="text-[25px] font-extrabold tracking-tighter text-emerald-800 uppercase leading-none font-heading">HDHTAN</h2>
-                                    <div class="text-[6.8px] font-black text-red-600 uppercase tracking-tight leading-none mt-[1px] font-heading">IN COLLABORATION WITH FEDERAL GOVERNMENT (PPP)</div>
-                                </div>
-                            </div>
-                            <h3 class="text-[10px] font-black text-slate-950 uppercase leading-tight tracking-tight px-1 mt-2 mb-1">special taskforce against economic sabotage and multiple taxation</h3>
-                            <p class="text-[9px] font-black text-red-600 uppercase tracking-widest bg-slate-100 py-0.5 rounded font-heading">presidential order-001</p>
+                            <table style="width: 100%; border-collapse: collapse; margin-bottom: 2px;">
+                                <tr>
+                                    <td style="width: 48px; vertical-align: middle; padding: 0;">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Coat_of_arms_of_Nigeria.svg" alt="Coat of Arms" style="width: 44px; height: 44px; object-contain: fill; display: block;">
+                                    </td>
+                                    <td style="text-align: left; vertical-align: middle; padding-left: 6px;">
+                                        <span class="brand-title font-heading">HDHTAN</span>
+                                        <span class="brand-subtitle font-heading">IN COLLABORATION WITH FEDERAL GOVERNMENT (PPP)</span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3 class="text-[10px] font-black text-slate-950 uppercase tracking-tight px-1 mt-1 mb-1" style="line-height: 1.2;">special taskforce against economic sabotage and multiple taxation</h3>
+                            <p class="text-[9px] font-black text-red-600 uppercase tracking-widest bg-slate-100 py-0.5 rounded font-heading" style="line-height: 1.1; display: block;">presidential order-001</p>
                         </div>
 
                         <div class="flex flex-col flex-1 my-2 justify-between z-10 w-full">
                             <div class="w-24 h-26 border-2 border-emerald-700 rounded bg-slate-100 overflow-hidden shadow-sm relative mx-auto mb-2">
                                 <img id="card-photo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f1f5f9'/><circle cx='50' cy='40' r='20' fill='%23cbd5e1'/><path d='M20,90 C20,70 80,70 80,90' fill='%23cbd5e1'/></svg>" alt="Member Passport" class="w-full h-full object-cover">
                             </div>
-                            <div class="red-outline-box space-y-1.5 w-full px-2.5 text-center">
-                                <div>
-                                    <div class="card-label">NAME:</div>
-                                    <div id="card-name" class="card-value font-bold tracking-wide"></div>
+                            <div class="red-outline-box space-y-2 w-full px-2.5 text-center">
+                                <div class="block">
+                                    <span class="card-label">NAME:</span>
+                                    <span id="card-name" class="card-value font-bold tracking-wide"></span>
                                 </div>
-                                <div>
-                                    <div class="card-label">RANK / POSITION:</div>
-                                    <div id="card-position" class="card-value font-bold tracking-wide text-emerald-800"></div>
+                                <div class="block">
+                                    <span class="card-label">RANK / POSITION:</span>
+                                    <span id="card-position" class="card-value font-bold tracking-wide text-emerald-800"></span>
                                 </div>
-                                <div>
-                                    <div class="card-label">HOLDER'S SIGN:</div>
+                                <div class="block">
+                                    <span class="card-label">HOLDER'S SIGN:</span>
                                     <div class="h-8 w-full mt-0.5 flex items-center justify-center border-b border-dashed border-slate-300">
                                         <img id="card-sign" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='30'></svg>" alt="" class="max-h-full object-contain max-w-[180px]">
                                     </div>
@@ -255,37 +289,38 @@
                         </div>
                     </div>
 
+                    <!-- BACK SIDE -->
                     <div id="capture-back" class="id-card-wrapper flex flex-col justify-between p-4 bg-white text-slate-800 relative">
                         <img src="hdhtan logo.jpg" alt="HDHTAN Watermark" class="watermark-bg">
                         <div class="text-center border-b border-red-600/20 pb-2 z-10 w-full">
-                            <span class="text-[12px] font-black text-red-600 uppercase tracking-wider block font-heading leading-tight">HDHTAN SPECIAL TASKFORCE<br>TARABA STATE</span>
+                            <span class="text-[12px] font-black text-red-600 uppercase tracking-wider block font-heading" style="line-height: 1.3;">HDHTAN SPECIAL TASKFORCE<br>TARABA STATE</span>
                         </div>
                         <div class="flex flex-col justify-between flex-1 my-2 px-2 text-center z-10 w-full">
                             <div class="mt-4">
-                                <p class="text-[11px] text-slate-700 font-bold leading-relaxed uppercase">
-                                    If lost call <span class="text-emerald-700 font-extrabold block text-[14px] my-1">08106295277</span> or return to the nearest police station.
+                                <p class="text-[11px] text-slate-700 font-bold uppercase" style="line-height: 1.4;">
+                                    If lost call <span class="text-emerald-700 font-extrabold block text-[14px] my-1" style="line-height: 1.2;">08106295277</span> or return to the nearest police station.
                                 </p>
                             </div>
                             <div class="my-2 flex flex-col items-center justify-center">
                                 <div class="w-20 h-20 bg-white p-1 border border-slate-200 rounded-lg shadow-sm">
                                     <img id="card-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Pending" alt="Verification QR Code" class="w-full h-full object-contain">
                                 </div>
-                                <span class="text-[6px] font-black text-emerald-800 tracking-wider uppercase mt-1">
+                                <span class="text-[6px] font-black text-emerald-800 tracking-wider uppercase mt-1" style="line-height: 1.1;">
                                     <i class="fa-solid fa-qrcode mr-0.5"></i> SECURE SCANNER VALIDATION
                                 </span>
                             </div>
                             <div class="grid grid-cols-2 gap-4 w-full border-t border-slate-100 pt-2 text-left">
-                                <div>
-                                    <div class="card-label !text-emerald-800">ISSUE DATE:</div>
-                                    <div id="card-issue" class="card-value font-mono text-[11px] !text-slate-900"></div>
+                                <div class="block">
+                                    <span class="card-label !text-emerald-800">ISSUE DATE:</span>
+                                    <span id="card-issue" class="card-value font-mono text-[11px] !text-slate-900"></span>
                                 </div>
-                                <div>
-                                    <div class="card-label !text-emerald-800">EXPIRE DATE:</div>
-                                    <div id="card-expire" class="card-value font-mono text-[11px] !text-red-600 font-bold"></div>
+                                <div class="block">
+                                    <span class="card-label !text-emerald-800">EXPIRE DATE:</span>
+                                    <span id="card-expire" class="card-value font-mono text-[11px] !text-red-600 font-bold"></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="text-[6.5px] text-slate-400 text-center border-t border-slate-100 pt-1 z-10 w-full">Official National Anti-Sabotage Monitoring Identity Document © 2026.</div>
+                        <div class="text-[6.5px] text-slate-400 text-center border-t border-slate-100 pt-1 z-10 w-full" style="line-height: 1.1;">Official National Anti-Sabotage Monitoring Identity Document © 2026.</div>
                     </div>
                 </div>
             </div>
@@ -329,42 +364,47 @@
             });
         }
 
-        // Snapshots the complete side-by-side printer layout array as a high-definition PNG
+        // Snapshots the complete print container cleanly with explicitly mapped inline layouts
         function downloadPrintPagePNG() {
             const printContainer = document.getElementById('print-sheet-container');
             const inputNameField = document.getElementById('input-name').value || 'Taskforce_Member';
             const cleanFileName = inputNameField.toUpperCase().replace(/\s+/g, '_') + '_PRINT_PAGE';
 
-            // Clone to avoid layout glitches or responsive layout restrictions
+            // Create visible rendering viewport box in memory to prevent canvas line jams
             const sheetClone = printContainer.cloneNode(true);
             sheetClone.style.position = 'fixed';
-            sheetClone.style.top = '-9999px';
-            sheetClone.style.left = '-9999px';
+            sheetClone.style.top = '0px';
+            sheetClone.style.left = '0px';
+            sheetClone.style.zIndex = '-99999';
             sheetClone.style.display = 'flex';
             sheetClone.style.flexDirection = 'row';
             sheetClone.style.gap = '24px';
-            sheetClone.style.padding = '20px';
-            sheetClone.style.backgroundColor = '#ffffff'; // Pristine clean white background for printing
+            sheetClone.style.padding = '30px';
+            sheetClone.style.backgroundColor = '#ffffff'; 
             document.body.appendChild(sheetClone);
 
-            // Strip shadows off individual cloned wrapper layouts for flat graphic reproduction
             sheetClone.querySelectorAll('.id-card-wrapper').forEach(card => {
                 card.style.boxShadow = 'none';
                 card.style.transform = 'none';
+                card.style.display = 'block';
             });
 
-            html2canvas(sheetClone, {
-                scale: 3, // Premium ultra-crisp photo sharpness
-                useCORS: true,
-                allowTaint: true,
-                backgroundColor: "#ffffff"
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `${cleanFileName}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-                sheetClone.remove();
-            });
+            // Delay execution by 150ms so CSS text weight and typography properties map out flawlessly before snapshot
+            setTimeout(() => {
+                html2canvas(sheetClone, {
+                    scale: 3, 
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: "#ffffff",
+                    logging: false
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `${cleanFileName}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    sheetClone.remove();
+                });
+            }, 150);
         }
 
         function initializeGenerator() {
