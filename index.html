@@ -129,4 +129,313 @@
 </head>
 <body class="p-4 md:p-8">
 
-    <div id="validation-view-panel" class="hidden max-w-md mx-auto my-12 bg-slate-900 border border
+    <!-- 1. LIVE PUBLIC SCANNER VALIDATOR SCREEN -->
+    <div id="validation-view-panel" class="hidden max-w-md mx-auto my-12 bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center shadow-2xl">
+        <div class="w-20 h-20 bg-emerald-500/10 border border-emerald-500/30 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fa-solid fa-shield-check text-emerald-500 text-4xl"></i>
+        </div>
+        <span class="text-emerald-500 font-bold tracking-widest text-xs uppercase bg-emerald-500/10 px-4 py-1.5 rounded-full border border-emerald-500/20">
+            <i class="fa-solid fa-circle-check mr-1"></i> Official HDHTAN Verification Passed
+        </span>
+        
+        <h2 class="text-2xl font-extrabold text-white mt-6 mb-1 uppercase font-heading tracking-tight">NATIONAL TASKFORCE MEMBER</h2>
+        <p class="text-xs text-red-500 font-bold tracking-widest uppercase">Presidential Order-001</p>
+
+        <div class="mt-6 border-t border-b border-slate-800/80 py-4 my-4 space-y-3 text-left">
+            <div>
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Personnel Name</p>
+                <p id="v-name" class="text-lg font-bold text-slate-100 uppercase">-</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Rank / Assignment</p>
+                <p id="v-position" class="text-md font-bold text-emerald-400 uppercase">-</p>
+            </div>
+            <div class="grid grid-cols-2 gap-4 pt-1">
+                <div>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Issued Date</p>
+                    <p id="v-issue" class="text-sm font-semibold text-slate-300">-</p>
+                </div>
+                <div>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Expiration Date</p>
+                    <p id="v-expire" class="text-sm font-bold text-red-400">-</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. MAIN ADMINISTRATIVE ID GENERATOR PANEL -->
+    <div id="generator-view-panel" class="block max-w-7xl mx-auto">
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-6 border-b border-slate-800">
+            <div>
+                <span class="text-emerald-500 font-semibold tracking-wider text-xs uppercase bg-emerald-500/10 px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-qrcode mr-1"></i> Custom Taskforce Operational Layout
+                </span>
+                <h1 class="text-3xl font-bold mt-2 text-white">HDHTAN ID System & QR Validator</h1>
+                <p class="text-slate-400 text-sm mt-1">Configure, preview, and export print sheets with standard formatting rules.</p>
+            </div>
+            <div class="flex items-center gap-3 mt-4 md:mt-0 bg-slate-900/80 p-3 rounded-lg border border-slate-800">
+                <i class="fa-solid fa-user-shield text-emerald-500 text-xl"></i>
+                <div>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Admin Email</p>
+                    <p class="text-sm font-semibold text-slate-200">malabubakarmohammed679@gmail.com</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- CONTROLS FORM -->
+            <div class="lg:col-span-5 bg-slate-900/60 p-6 rounded-2xl border border-slate-800/80 backdrop-blur-sm h-fit">
+                <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
+                    <i class="fa-solid fa-sliders text-emerald-500"></i> Card Customization Controls
+                </h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Full Member Name</label>
+                        <input id="input-name" type="text" value="ABUBAKAR MOHAMMED" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Official Position / Rank</label>
+                        <input id="input-position" type="text" value="ADMIN" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Issue Date</label>
+                            <input id="input-issue" type="text" value="01/01/2026" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Expiry Date</label>
+                            <input id="input-expire" type="text" value="31/12/2026" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Upload Passport Photo</label>
+                        <input id="input-image" type="file" accept="image/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-emerald-400 hover:file:bg-slate-700 cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Upload Signature Image</label>
+                        <input id="input-signature" type="file" accept="image/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-emerald-400 hover:file:bg-slate-700 cursor-pointer">
+                    </div>
+                    <div class="pt-4">
+                        <button onclick="downloadPrintPagePNG()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm uppercase tracking-wider">
+                            <i class="fa-solid fa-download"></i> Download Print Page (PNG)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISUAL PREVIEW VIEWPORT CANVAS -->
+            <div class="lg:col-span-7 flex flex-col items-center bg-slate-950/40 p-6 rounded-2xl border border-slate-800 w-full overflow-hidden">
+                <div class="text-xs text-slate-500 font-bold tracking-wider mb-6 uppercase">
+                    <i class="fa-solid fa-eye mr-1"></i> Live Document Preview Canvas
+                </div>
+                
+                <div id="print-sheet-container" class="grid grid-cols-1 md:grid-cols-2 gap-8 p-4 bg-transparent w-full justify-items-center">
+                    
+                    <!-- FRONT SIDE -->
+                    <div id="capture-front" class="id-card-wrapper p-4 pl-9 relative">
+                        <div class="vertical-flag-ruler">
+                            <div class="flag-green"></div>
+                            <div class="flag-white"></div>
+                            <div class="flag-green"></div>
+                        </div>
+                        
+                        <div class="watermark-bg front-watermark flex items-center justify-center">
+                            <svg viewBox="0 0 100 100" class="w-full h-full text-emerald-800 opacity-20" fill="currentColor"><path d="M50 15 L80 35 L80 70 L50 90 L20 70 L20 35 Z M50 25 L70 40 L70 65 L50 80 L30 65 L30 40 Z"/></svg>
+                        </div>
+                        
+                        <div class="text-center border-b border-emerald-800/20 pb-2 z-10 w-full">
+                            <div class="brand-block-container">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Coat_of_arms_of_Nigeria.svg" alt="Coat of Arms" class="brand-logo-placement">
+                                <span class="brand-title font-heading">HDHTAN</span>
+                                <span class="brand-subtitle font-heading">IN COLLABORATION WITH FEDERAL GOVERNMENT (PPP)</span>
+                            </div>
+                            <h3 class="text-[10px] font-black text-slate-950 uppercase tracking-tight px-1 mt-2 mb-1" style="line-height: 1.2;">special taskforce against economic sabotage and multiple taxation</h3>
+                            <p class="text-[9px] font-black text-red-600 uppercase tracking-widest bg-slate-100 py-0.5 rounded font-heading" style="line-height: 1.1; display: block;">presidential order-001</p>
+                        </div>
+
+                        <div class="flex flex-col flex-1 my-2 justify-between z-10 w-full">
+                            <div class="w-24 h-26 border-2 border-emerald-700 rounded bg-slate-100 overflow-hidden shadow-sm relative mx-auto mb-2">
+                                <img id="card-photo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f1f5f9'/><circle cx='50' cy='40' r='20' fill='%23cbd5e1'/><path d='M20,90 C20,70 80,70 80,90' fill='%23cbd5e1'/></svg>" alt="Member Passport" class="w-full h-full object-cover">
+                            </div>
+                            <div class="red-outline-box space-y-2 w-full px-2.5 text-center">
+                                <div class="block">
+                                    <span class="card-label">NAME:</span>
+                                    <span id="card-name" class="card-value font-bold tracking-wide">ABUBAKAR MOHAMMED</span>
+                                </div>
+                                <div class="block">
+                                    <span class="card-label">RANK / POSITION:</span>
+                                    <span id="card-position" class="card-value font-bold tracking-wide text-emerald-800">ADMIN</span>
+                                </div>
+                                <div class="block">
+                                    <span class="card-label">HOLDER'S SIGN:</span>
+                                    <div class="h-8 w-full mt-0.5 flex items-center justify-center border-b border-dashed border-slate-300">
+                                        <img id="card-sign" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='30'></svg>" alt="" class="max-h-full object-contain max-w-[180px]">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BACK SIDE -->
+                    <div id="capture-back" class="id-card-wrapper p-4 relative">
+                        <div class="watermark-bg flex items-center justify-center">
+                            <svg viewBox="0 0 100 100" class="w-full h-full text-emerald-800 opacity-20" fill="currentColor"><path d="M50 15 L80 35 L80 70 L50 90 L20 70 L20 35 Z M50 25 L70 40 L70 65 L50 80 L30 65 L30 40 Z"/></svg>
+                        </div>
+                        
+                        <div class="text-center border-b border-red-600/20 pb-2 z-10 w-full">
+                            <span class="text-[12px] font-black text-red-600 uppercase tracking-wider block font-heading" style="line-height: 1.3;">HDHTAN SPECIAL TASKFORCE<br>TARABA STATE</span>
+                        </div>
+                        <div class="flex flex-col justify-between flex-1 my-2 px-2 text-center z-10 w-full">
+                            <div class="mt-4">
+                                <p class="text-[11px] text-slate-700 font-bold uppercase" style="line-height: 1.4;">
+                                    If lost call <span class="text-emerald-700 font-extrabold block text-[14px] my-1" style="line-height: 1.2;">08106295277</span> or return to the nearest police station.
+                                </p>
+                            </div>
+                            <div class="my-2 flex flex-col items-center justify-center">
+                                <div class="w-20 h-20 bg-white p-1 border border-slate-200 rounded-lg shadow-sm">
+                                    <img id="card-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Pending" alt="Verification QR Code" class="w-full h-full object-contain">
+                                </div>
+                                <span class="text-[6px] font-black text-emerald-800 tracking-wider uppercase mt-1" style="line-height: 1.1;">
+                                    <i class="fa-solid fa-qrcode mr-0.5"></i> SECURE SCANNER VALIDATION
+                                </span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 w-full border-t border-slate-100 pt-2 text-left">
+                                <div class="block">
+                                    <span class="card-label !text-emerald-800">ISSUE DATE:</span>
+                                    <span id="card-issue" class="card-value font-mono text-[11px] !text-slate-900">01/01/2026</span>
+                                </div>
+                                <div class="block">
+                                    <span class="card-label !text-emerald-800">EXPIRE DATE:</span>
+                                    <span id="card-expire" class="card-value font-mono text-[11px] !text-red-600 font-bold">31/12/2026</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-[6.5px] text-slate-400 text-center border-t border-slate-100 pt-1 z-10 w-full" style="line-height: 1.1;">Official National Anti-Sabotage Monitoring Identity Document © 2026.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const valPanel = document.getElementById('validation-view-panel');
+        const genPanel = document.getElementById('generator-view-panel');
+
+        if (urlParams.has('verify') && urlParams.get('verify') === 'true') {
+            genPanel.style.display = 'none';
+            valPanel.classList.remove('hidden');
+            document.body.classList.replace('bg-[#0b0f19]', 'bg-[#070a13]');
+            
+            document.getElementById('v-name').innerText = urlParams.get('name') || 'UNKNOWN';
+            document.getElementById('v-position').innerText = urlParams.get('pos') || 'UNKNOWN';
+            document.getElementById('v-issue').innerText = urlParams.get('issued') || 'UNKNOWN';
+            document.getElementById('v-expire').innerText = urlParams.get('expires') || 'UNKNOWN';
+        } else {
+            initializeGenerator();
+        }
+
+        function downloadPrintPagePNG() {
+            const printContainer = document.getElementById('print-sheet-container');
+            const inputNameField = document.getElementById('input-name').value || 'Taskforce_Member';
+            const cleanFileName = inputNameField.toUpperCase().replace(/\s+/g, '_') + '_PRINT_PAGE';
+
+            const sheetClone = printContainer.cloneNode(true);
+            sheetClone.style.position = 'fixed';
+            sheetClone.style.top = '0px';
+            sheetClone.style.left = '0px';
+            sheetClone.style.zIndex = '-99999';
+            sheetClone.style.display = 'flex';
+            sheetClone.style.flexDirection = 'row';
+            sheetClone.style.gap = '24px';
+            sheetClone.style.padding = '30px';
+            sheetClone.style.backgroundColor = '#ffffff'; 
+            document.body.appendChild(sheetClone);
+
+            sheetClone.querySelectorAll('.id-card-wrapper').forEach(card => {
+                card.style.boxShadow = 'none';
+                card.style.transform = 'none';
+                card.style.display = 'flex';
+                card.style.width = '315px';
+                card.style.height = '480px';
+            });
+
+            setTimeout(() => {
+                html2canvas(sheetClone, {
+                    scale: 3, 
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: "#ffffff",
+                    logging: false
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `${cleanFileName}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    sheetClone.remove();
+                });
+            }, 200);
+        }
+
+        function initializeGenerator() {
+            const inputName = document.getElementById('input-name');
+            const inputPosition = document.getElementById('input-position');
+            const inputIssue = document.getElementById('input-issue');
+            const inputExpire = document.getElementById('input-expire');
+            const inputImage = document.getElementById('input-image');
+            const inputSignature = document.getElementById('input-signature');
+
+            const cardName = document.getElementById('card-name');
+            const cardPosition = document.getElementById('card-position');
+            const cardIssue = document.getElementById('card-issue');
+            const cardExpire = document.getElementById('card-expire');
+            const cardPhoto = document.getElementById('card-photo');
+            const cardSign = document.getElementById('card-sign');
+            const cardQr = document.getElementById('card-qr');
+
+            function updateCardText() {
+                const nameVal = inputName.value.toUpperCase() || "MEMBER NAME";
+                const posVal = inputPosition.value.toUpperCase() || "OPERATIONAL POSITION";
+                const issueVal = inputIssue.value || "01/01/2026";
+                const expireVal = inputExpire.value || "31/12/2026";
+
+                cardName.innerText = nameVal;
+                cardPosition.innerText = posVal;
+                cardIssue.innerText = issueVal;
+                cardExpire.innerText = expireVal;
+
+                const baseUrl = window.location.href.split('?')[0];
+                const verificationUrl = `${baseUrl}?verify=true&name=${encodeURIComponent(nameVal)}&pos=${encodeURIComponent(posVal)}&issued=${encodeURIComponent(issueVal)}&expires=${encodeURIComponent(expireVal)}`;
+                
+                cardQr.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verificationUrl)}`;
+            }
+
+            inputName.addEventListener('input', updateCardText);
+            inputPosition.addEventListener('input', updateCardText);
+            inputIssue.addEventListener('input', updateCardText);
+            inputExpire.addEventListener('input', updateCardText);
+
+            inputImage.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) { cardPhoto.src = event.target.result; };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            inputSignature.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) { cardSign.src = event.target.result; };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            updateCardText();
+        }
+    </script>
+</body>
+</html>
