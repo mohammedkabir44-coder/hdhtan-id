@@ -52,10 +52,10 @@
             position: absolute;
             top: 55%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scale(1);
             width: 200px;
             height: 200px;
-            opacity: 0.12;
+            opacity: 0.08;
             pointer-events: none;
             z-index: 0;
         }
@@ -176,46 +176,3 @@
                 <p class="text-slate-400 text-sm mt-1">Configure, preview, and export print sheets with standard formatting rules.</p>
             </div>
             <div class="flex items-center gap-3 mt-4 md:mt-0 bg-slate-900/80 p-3 rounded-lg border border-slate-800">
-                <i class="fa-solid fa-user-shield text-emerald-500 text-xl"></i>
-                <div>
-                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Admin Email</p>
-                    <p class="text-sm font-semibold text-slate-200">malabubakarmohammed679@gmail.com</p>
-                </div>
-            </div>
-        </header>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div class="lg:col-span-5 bg-slate-900/60 p-6 rounded-2xl border border-slate-800/80 backdrop-blur-sm h-fit">
-                <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
-                    <i class="fa-solid fa-sliders text-emerald-500"></i> Card Customization Controls
-                </h3>
-                
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Full Member Name</label>
-                        <input id="input-name" type="text" placeholder="e.g. ABUBAKAR MOHAMMED" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Official Position / Rank</label>
-                        <input id="input-position" type="text" placeholder="e.g. ADMIN" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Issue Date</label>
-                            <input id="input-issue" type="text" placeholder="DD/MM/YYYY" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Expiry Date</label>
-                            <input id="input-expire" type="text" placeholder="DD/MM/YYYY" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Upload Passport Photo</label>
-                        <input id="input-image" type="file" accept="image/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-emerald-400 hover:file:bg-slate-700 cursor-pointer">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Upload Signature Image</label>
-                        <input id="input-signature" type="file" accept="image/*" class="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-emerald-400 hover:file:bg-slate-700 cursor-pointer">
-                    </div>
-                    <div class="pt-4">
-                        <button onclick="downloadPrintPagePNG()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition flex items
