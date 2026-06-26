@@ -4,131 +4,315 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HDHTAN ID System Hub</title>
-    <!-- CSS Layout Engines -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        body { background-color: #0b0f19; color: #f1f5f9; font-family: sans-serif; }
+        /* Base Page Setup */
+        body { 
+            background-color: #0b0f19; 
+            color: #f1f5f9; 
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            border-b: 1px solid #1e293b;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header-badge {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        /* Layout Grid */
+        .workspace {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        @media (min-width: 1024px) {
+            .workspace {
+                grid-template-columns: 5fr 7fr;
+            }
+        }
+
+        /* Forms / Controls Box */
+        .controls-panel {
+            background-color: rgba(30, 41, 59, 0.5);
+            border: 1px solid #1e293b;
+            border-radius: 16px;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: bold;
+            color: #94a3b8;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .form-group input {
+            width: 100%;
+            background-color: #020617;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px;
+            color: #ffffff;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .form-group input:focus {
+            border-color: #10b981;
+            outline: none;
+        }
+
+        /* ID Card Display Wrapper */
+        .preview-area {
+            background-color: rgba(2, 6, 23, 0.4);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 500px;
+        }
+
+        /* THE PHYSICAL ID CARD - FORCED VISIBILITY STYLE */
         .id-card-wrapper {
             width: 315px;
             height: 480px;
             border-radius: 14px;
-            background: #ffffff !important;
+            background-color: #ffffff !important;
             color: #1e293b !important;
             border: 1px solid #cbd5e1;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: space-between !important;
             position: relative;
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            display: block !important;
+            box-sizing: border-box;
+            padding: 16px 16px 16px 45px;
         }
+
+        /* Tricolor Nigerian Side Ribbon */
         .flag-ruler {
-            position: absolute; top: 0; left: 0; width: 24px; height: 100%; display: flex; z-index: 30;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 100%;
+            display: flex;
+            z-index: 30;
         }
-        .green { background: #15803d; width: 33.3%; }
-        .white { background: #ffffff; width: 33.4%; }
-        .red-box { border: 2px solid #dc2626; border-radius: 8px; padding: 10px; width: 100%; }
+        .flag-green { background-color: #15803d; width: 8px; height: 100%; }
+        .flag-white { background-color: #ffffff; width: 8px; height: 100%; }
+
+        /* Card Typography & Header Blocks */
+        .card-header {
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        .main-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #115e59;
+            margin: 0;
+            line-height: 1;
+            letter-spacing: -0.5px;
+        }
+        .sub-title {
+            font-size: 6px;
+            font-weight: 800;
+            color: #dc2626;
+            margin: 4px 0 0 0;
+            white-space: nowrap;
+        }
+        .taskforce-desc {
+            font-size: 8px;
+            font-weight: 800;
+            color: #0f172a;
+            text-transform: uppercase;
+            margin: 6px 0 4px 0;
+            line-height: 1.2;
+        }
+        .order-tag {
+            background-color: #f1f5f9;
+            color: #dc2626;
+            font-size: 9px;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 2px 0;
+            border-radius: 4px;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        /* Card Content Frame */
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: calc(100% - 110px);
+            justify-content: space-between;
+        }
+        .passport-frame {
+            width: 100px;
+            height: 110px;
+            border: 2px solid #047857;
+            background-color: #f8fafc;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .passport-placeholder {
+            width: 45px;
+            height: 45px;
+            background-color: #cbd5e1;
+            border-radius: 50%;
+            position: relative;
+        }
+        .passport-placeholder::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: -10px;
+            width: 65px;
+            height: 30px;
+            background-color: #cbd5e1;
+            border-radius: 20px 20px 0 0;
+        }
+
+        /* Red Border Enclosed Output Box */
+        .red-outline-box {
+            border: 2px solid #dc2626;
+            border-radius: 8px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            background-color: transparent;
+        }
+        .box-label {
+            font-size: 9px;
+            font-weight: 800;
+            color: #dc2626;
+            margin: 0 0 2px 0;
+            letter-spacing: 0.5px;
+        }
+        .box-value {
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f172a;
+            text-transform: uppercase;
+            margin: 0 0 10px 0;
+            min-height: 16px;
+        }
+        .box-value.rank {
+            color: #115e59;
+            margin-bottom: 0;
+        }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body>
 
-    <div class="max-w-7xl mx-auto">
-        <!-- HEADER -->
-        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-6 border-b border-slate-800">
-            <div>
-                <span class="text-emerald-500 font-semibold text-xs uppercase bg-emerald-500/10 px-3 py-1 rounded-full">
-                    <i class="fa-solid fa-layer-group mr-1"></i> Custom Taskforce Operational Layout
-                </span>
-                <h1 class="text-3xl font-bold mt-2 text-white">HDHTAN ID System & QR Validator</h1>
-                <p class="text-slate-400 text-sm mt-1">Configure, preview, and export print sheets with standard formatting rules.</p>
-            </div>
-            <div class="mt-4 md:mt-0 bg-slate-900/80 p-3 rounded-lg border border-slate-800">
-                <p class="text-[10px] text-slate-500 font-bold uppercase">Admin Email</p>
-                <p class="text-sm font-semibold text-slate-200">malabubakarmohammed679@gmail.com</p>
-            </div>
+    <div class="container">
+        <header>
+            <span class="header-badge">Custom Taskforce Operational Layout</span>
+            <h1 style="font-size: 28px; margin: 10px 0 5px 0; color: #ffffff;">HDHTAN ID System & QR Validator</h1>
+            <p style="color: #94a3b8; margin: 0; font-size: 14px;">Configure, preview, and export print sheets with standard formatting rules.</p>
+            <p style="font-size: 12px; color: #64748b; margin: 10px 0 0 0;">Admin Account: <strong>malabubakarmohammed679@gmail.com</strong></p>
         </header>
 
-        <!-- WORKSPACE GRID -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="workspace">
             
-            <!-- CONTROLS FORM -->
-            <div class="lg:col-span-5 bg-slate-900/50 p-6 rounded-2xl border border-slate-800">
-                <h3 class="text-lg font-bold mb-6 text-white border-b border-slate-800 pb-2">
-                    <i class="fa-solid fa-sliders text-emerald-500 mr-1"></i> Card Customization Controls
-                </h3>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Full Member Name</label>
-                        <input id="in-name" type="text" value="ABUBAKAR MOHAMMED" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-emerald-500">
+            <div class="controls-panel">
+                <h3 style="margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #334155; padding-bottom: 10px; font-size: 18px;">Card Customization Controls</h3>
+                
+                <div class="form-group">
+                    <label>Full Member Name</label>
+                    <input id="in-name" type="text" value="ABUBAKAR MOHAMMED">
+                </div>
+                
+                <div class="form-group">
+                    <label>Official Position / Rank</label>
+                    <input id="in-pos" type="text" value="ADMIN">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Issue Date</label>
+                        <input type="text" value="01/01/2026" disabled>
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Official Position / Rank</label>
-                        <input id="in-pos" type="text" value="ADMIN" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-emerald-500">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Issue Date</label>
-                            <input id="in-issue" type="text" value="01/01/2026" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-white">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Expiry Date</label>
-                            <input id="in-expire" type="text" value="31/12/2026" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2 text-white">
-                        </div>
+                    <div class="form-group">
+                        <label>Expiry Date</label>
+                        <input type="text" value="31/12/2026" disabled>
                     </div>
                 </div>
             </div>
 
-            <!-- CARD PREVIEW AREA -->
-            <div class="lg:col-span-7 flex items-center justify-center bg-slate-950/40 rounded-2xl p-4">
-                <div class="id-card-wrapper p-4 pl-9">
-                    <!-- Nigerian Flag Side Strip -->
+            <div class="preview-area">
+                
+                <div class="id-card-wrapper">
                     <div class="flag-ruler">
-                        <div class="green"></div>
-                        <div class="white"></div>
-                        <div class="green"></div>
+                        <div class="flag-green"></div>
+                        <div class="flag-white"></div>
+                        <div class="flag-green"></div>
                     </div>
 
-                    <!-- Card Header -->
-                    <div class="text-center border-b border-slate-200 pb-2">
-                        <span class="text-2xl font-black text-emerald-800 block tracking-tight">HDHTAN</span>
-                        <span class="text-[5.5px] font-bold text-red-600 block tracking-tighter">IN COLLABORATION WITH FEDERAL GOVERNMENT (PPP)</span>
-                        <p class="text-[8px] font-bold text-slate-900 uppercase mt-1 leading-tight">Special Taskforce Against Economic Sabotage</p>
+                    <div class="card-header">
+                        <h2 class="main-title">HDHTAN</h2>
+                        <h4 class="sub-title">IN COLLABORATION WITH FEDERAL GOVERNMENT (PPP)</h4>
+                        <div class="taskforce-desc">Special Taskforce Against Economic Sabotage</div>
+                        <p class="order-tag">Presidential Order-001</p>
                     </div>
 
-                    <!-- Card Body -->
-                    <div class="flex flex-col items-center justify-center flex-1 my-2 space-y-3">
-                        <!-- Passport Frame -->
-                        <div class="w-24 h-24 border-2 border-emerald-700 bg-slate-100 flex items-center justify-center rounded overflow-hidden">
-                            <i class="fa-solid fa-user text-slate-300 text-4xl"></i>
+                    <div class="card-body">
+                        <div class="passport-frame">
+                            <div class="passport-placeholder"></div>
                         </div>
 
-                        <!-- Data Holder Box -->
-                        <div class="red-box text-center space-y-1">
-                            <div>
-                                <span class="text-[8px] font-extrabold text-red-600 block">NAME:</span>
-                                <span id="lbl-name" class="text-xs font-bold text-slate-900 block">ABUBAKAR MOHAMMED</span>
-                            </div>
-                            <div>
-                                <span class="text-[8px] font-extrabold text-red-600 block">RANK / POSITION:</span>
-                                <span id="lbl-pos" class="text-xs font-bold text-emerald-800 block">ADMIN</span>
-                            </div>
+                        <div class="red-outline-box">
+                            <p class="box-label">NAME:</p>
+                            <div id="lbl-name" class="box-value">ABUBAKAR MOHAMMED</div>
+                            
+                            <p class="box-label" style="border-top: 1px dashed #cbd5e1; padding-top: 6px;">RANK / POSITION:</p>
+                            <div id="lbl-pos" class="box-value rank">ADMIN</div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
     </div>
 
-    <!-- Active Text Update Sync Script -->
     <script>
-        document.getElementById('in-name').addEventListener('input', (e) => {
-            document.getElementById('lbl-name').innerText = e.target.value.toUpperCase() || "MEMBER NAME";
+        const inputName = document.getElementById('in-name');
+        const inputPos = document.getElementById('in-pos');
+        const lblName = document.getElementById('lbl-name');
+        const lblPos = document.getElementById('lbl-pos');
+
+        inputName.addEventListener('input', function() {
+            lblName.innerText = inputName.value.toUpperCase() || "MEMBER NAME";
         });
-        document.getElementById('in-pos').addEventListener('input', (e) => {
-            document.getElementById('lbl-pos').innerText = e.target.value.toUpperCase() || "POSITION";
+
+        inputPos.addEventListener('input', function() {
+            lblPos.innerText = inputPos.value.toUpperCase() || "OPERATIONAL POSITION";
         });
     </script>
 </body>
