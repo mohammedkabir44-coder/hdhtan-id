@@ -1,55 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>HDHTAN Official Validator</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-900 text-white p-8">
+<body class="bg-slate-900 text-white p-6">
 
-    <div id="validator-ui" class="hidden max-w-md mx-auto bg-slate-800 p-8 rounded-2xl border border-emerald-500 text-center">
-        <h2 class="text-2xl font-bold text-emerald-400">VALIDATION RESULT</h2>
-        <div id="result-content" class="mt-6 text-left space-y-4">
-            <p><strong>Name:</strong> <span id="v-name">Loading...</span></p>
-            <p><strong>Rank:</strong> <span id="v-rank">Loading...</span></p>
+    <div id="validator-ui" class="hidden max-w-md mx-auto bg-slate-800 p-8 rounded-2xl border border-emerald-500 text-center shadow-2xl">
+        <h2 class="text-2xl font-bold text-emerald-400 uppercase">Verification Result</h2>
+        <div class="mt-6 text-left space-y-4">
+            <p class="text-slate-400">Name: <span id="v-name" class="text-white font-bold">Checking...</span></p>
+            <p class="text-slate-400">Rank: <span id="v-rank" class="text-white font-bold">...</span></p>
         </div>
     </div>
 
+    <div id="generator-ui" class="max-w-md mx-auto bg-slate-800 p-8 rounded-2xl">
+        <h2 class="text-xl font-bold mb-4">Generate ID QR</h2>
+        <input id="in-id" type="text" placeholder="Enter Member ID (e.g., 001)" class="w-full p-2 mb-4 text-black rounded">
+        <button onclick="generateQR()" class="bg-emerald-600 w-full py-2 rounded">Generate QR Code</button>
+        <div id="qr-display" class="mt-6 flex justify-center"></div>
+    </div>
+
     <script>
-        // YOUR LIVE DATA SOURCE
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSaK6KrGDiuYMXgxnSlJ47PS_BWFTwe1sw5buJcLtw_ENaHszXtFJh2MpsLAEtNmF98ge70Pgiendtn/pub?output=csv';
 
-        async function performValidation() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const idToFind = urlParams.get('id'); // ID taken from the QR code
-
+        // 1. VALIDATION LOGIC
+        async function checkDatabase() {
+            const params = new URLSearchParams(window.location.search);
+            const idToFind = params.get('id');
             if (!idToFind) return;
 
+            document.getElementById('generator-ui').classList.add('hidden');
             document.getElementById('validator-ui').classList.remove('hidden');
 
-            try {
-                const response = await fetch(CSV_URL);
-                const data = await response.text();
-                const rows = data.split('\n');
-                
-                let found = false;
-                for (let i = 1; i < rows.length; i++) {
-                    const [id, name, rank] = rows[i].split(',');
-                    if (id && id.trim() === idToFind.trim()) {
-                        document.getElementById('v-name').innerText = name;
-                        document.getElementById('v-rank').innerText = rank;
-                        found = true;
-                        break;
-                    }
+            const res = await fetch(CSV_URL);
+            const data = await res.text();
+            const rows = data.split('\n');
+            
+            let found = false;
+            for (let i = 1; i < rows.length; i++) {
+                const [id, name, rank] = rows[i].split(',');
+                if (id && id.trim() === idToFind.trim()) {
+                    document.getElementById('v-name').innerText = name;
+                    document.getElementById('v-rank').innerText = rank;
+                    found = true;
                 }
-                if (!found) document.getElementById('v-name').innerText = "ID NOT FOUND IN DATABASE";
-            } catch (err) {
-                document.getElementById('v-name').innerText = "CONNECTION ERROR";
             }
+            if (!found) document.getElementById('v-name').innerText = "ID NOT FOUND";
         }
 
-        // Run on page load
-        performValidation();
+        // 2. GENERATOR LOGIC
+        function generateQR() {
+            const id = document.getElementById('in-id').value;
+            const baseUrl = window.location.origin + window.location.pathname;
+            const link = `${baseUrl}?id=${id}`;
+            const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(link)}`;
+            document.getElementById('qr-display').innerHTML = `<img src="${qrApi}" class="bg-white p-2 rounded">`;
+        }
+
+        checkDatabase();
     </script>
 </body>
 </html>
