@@ -19,21 +19,22 @@
         h1, h2, h3, h4, .font-heading {
             font-family: 'Poppins', sans-serif;
         }
+        /* ENFORCED FIXED SIZE PROPERTIES FOR PHYSICAL PRINT METRICS */
         .id-card-wrapper {
-            width: 315px;
-            height: 480px;
-            border-radius: 14px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            width: 315px !important;
+            height: 480px !important;
+            border-radius: 14px !important;
+            position: relative !important;
+            overflow: hidden !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5) !important;
             background: #ffffff !important;
             color: #1e293b !important;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #cbd5e1 !important;
             display: flex !important;
             flex-direction: column !important;
             justify-content: space-between !important;
-            box-sizing: border-box;
-            flex-shrink: 0;
+            box-sizing: border-box !important;
+            flex-shrink: 0 !important;
         }
         .vertical-flag-ruler {
             position: absolute;
@@ -104,6 +105,9 @@
             left: 0;
             width: 40px;
             height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .brand-title {
             font-size: 26px !important;
@@ -183,7 +187,7 @@
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <!-- CONTROLS FORM -->
+            <!-- INPUT FORM CONTROLS -->
             <div class="lg:col-span-5 bg-slate-900/60 p-6 rounded-2xl border border-slate-800/80 backdrop-blur-sm h-fit">
                 <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
                     <i class="fa-solid fa-sliders text-emerald-500"></i> Card Customization Controls
@@ -224,13 +228,14 @@
                 </div>
             </div>
 
-            <!-- VISUAL PREVIEW VIEWPORT CANVAS -->
+            <!-- LIVE PREVIEW VIEWPORT AREA -->
             <div class="lg:col-span-7 flex flex-col items-center bg-slate-950/40 p-6 rounded-2xl border border-slate-800 w-full overflow-hidden">
                 <div class="text-xs text-slate-500 font-bold tracking-wider mb-6 uppercase">
                     <i class="fa-solid fa-eye mr-1"></i> Live Document Preview Canvas
                 </div>
                 
-                <div id="print-sheet-container" class="grid grid-cols-1 md:grid-cols-2 gap-8 p-4 bg-transparent w-full justify-items-center">
+                <!-- Explicit CSS grid settings prevent browser viewport clipping on the back card -->
+                <div id="print-sheet-container" class="grid grid-cols-1 md:grid-cols-2 gap-8 p-4 bg-transparent w-full min-w-[320px] justify-items-center items-start">
                     
                     <!-- FRONT SIDE -->
                     <div id="capture-front" class="id-card-wrapper p-4 pl-9 relative">
@@ -246,7 +251,16 @@
                         
                         <div class="text-center border-b border-emerald-800/20 pb-2 z-10 w-full">
                             <div class="brand-block-container">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Coat_of_arms_of_Nigeria.svg" alt="Coat of Arms" class="brand-logo-placement">
+                                <!-- EMBEDDED INLINE COAT OF ARMS LOGO VECTOR DATA -->
+                                <div class="brand-logo-placement">
+                                    <svg viewBox="0 0 100 100" class="w-full h-full text-[#15803d]" fill="currentColor">
+                                        <path d="M50,5 L85,25 L85,65 L50,95 L15,65 L15,25 Z" fill="#15803d"/>
+                                        <path d="M50,12 L78,30 L78,60 L50,86 L22,60 L22,30 Z" fill="#ffffff"/>
+                                        <path d="M35,35 Q50,20 65,35 Q50,45 35,35 Z" fill="#15803d"/>
+                                        <path d="M35,55 Q50,40 65,55 Q50,65 35,55 Z" fill="#15803d"/>
+                                        <circle cx="50" cy="45" r="5" fill="#dc2626"/>
+                                    </svg>
+                                </div>
                                 <span class="brand-title font-heading">HDHTAN</span>
                                 <span class="brand-subtitle font-heading">IN COLLABORATION WITH FEDERAL GOVERNMENT (PPP)</span>
                             </div>
@@ -313,6 +327,7 @@
                         </div>
                         <div class="text-[6.5px] text-slate-400 text-center border-t border-slate-100 pt-1 z-10 w-full" style="line-height: 1.1;">Official National Anti-Sabotage Monitoring Identity Document © 2026.</div>
                     </div>
+                    
                 </div>
             </div>
         </div>
