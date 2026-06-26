@@ -26,14 +26,13 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            background: #ffffff;
-            color: #1e293b;
+            background: #ffffff !important;
+            color: #1e293b !important;
             border: 1px solid #cbd5e1;
-            transition: all 0.3s ease;
-        }
-        .id-card-wrapper:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            box-sizing: border-box;
         }
         .vertical-flag-ruler {
             position: absolute;
@@ -166,7 +165,7 @@
         </p>
     </div>
 
-    <div id="generator-view-panel" class="max-w-7xl mx-auto">
+    <div id="generator-view-panel" class="block max-w-7xl mx-auto">
         <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-6 border-b border-slate-800">
             <div>
                 <span class="text-emerald-500 font-semibold tracking-wider text-xs uppercase bg-emerald-500/10 px-3 py-1 rounded-full">
@@ -176,3 +175,18 @@
                 <p class="text-slate-400 text-sm mt-1">Configure, preview, and export print sheets with standard formatting rules.</p>
             </div>
             <div class="flex items-center gap-3 mt-4 md:mt-0 bg-slate-900/80 p-3 rounded-lg border border-slate-800">
+                <i class="fa-solid fa-user-shield text-emerald-500 text-xl"></i>
+                <div>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Admin Email</p>
+                    <p class="text-sm font-semibold text-slate-200">malabubakarmohammed679@gmail.com</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-5 bg-slate-900/60 p-6 rounded-2xl border border-slate-800/80 backdrop-blur-sm h-fit">
+                <h3 class="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
+                    <i class="fa-solid fa-sliders text-emerald-500"></i> Card Customization Controls
+                </h3>
+                
+                <div class="space-y-4">
