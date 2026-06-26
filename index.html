@@ -3,317 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HDHTAN ID System Hub</title>
+    <title>HDHTAN Taraba - Official ID & Verification Gate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        /* Base Page Setup */
-        body { 
-            background-color: #0b0f19; 
-            color: #f1f5f9; 
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #0b0f19;
+            color: #f1f5f9;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Poppins', sans-serif;
         }
-        header {
-            border-b: 1px solid #1e293b;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        .header-badge {
-            background-color: rgba(16, 185, 129, 0.1);
-            color: #10b981;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            display: inline-block;
-        }
-        
-        /* Layout Grid */
-        .workspace {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-        }
-        @media (min-width: 1024px) {
-            .workspace {
-                grid-template-columns: 5fr 7fr;
-            }
-        }
-
-        /* Forms / Controls Box */
-        .controls-panel {
-            background-color: rgba(30, 41, 59, 0.5);
-            border: 1px solid #1e293b;
-            border-radius: 16px;
-            padding: 24px;
-            box-sizing: border-box;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            font-size: 11px;
-            font-weight: bold;
-            color: #94a3b8;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-        .form-group input {
-            width: 100%;
-            background-color: #020617;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 10px;
-            color: #ffffff;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-        .form-group input:focus {
-            border-color: #10b981;
-            outline: none;
-        }
-
-        /* ID Card Display Wrapper */
-        .preview-area {
-            background-color: rgba(2, 6, 23, 0.4);
-            border-radius: 16px;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 500px;
-        }
-
-        /* THE PHYSICAL ID CARD - FORCED VISIBILITY STYLE */
         .id-card-wrapper {
             width: 315px;
             height: 480px;
             border-radius: 14px;
-            background-color: #ffffff !important;
-            color: #1e293b !important;
-            border: 1px solid #cbd5e1;
             position: relative;
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            display: block !important;
+            background: #ffffff !important;
+            color: #1e293b !important;
+            border: 1px solid #cbd5e1;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
             box-sizing: border-box;
-            padding: 16px 16px 16px 45px;
+            flex-shrink: 0;
         }
-
-        /* Tricolor Nigerian Side Ribbon */
-        .flag-ruler {
+        .vertical-flag-ruler {
             position: absolute;
             top: 0;
             left: 0;
             width: 24px;
             height: 100%;
             display: flex;
+            flex-direction: row;
             z-index: 30;
         }
-        .flag-green { background-color: #15803d; width: 8px; height: 100%; }
-        .flag-white { background-color: #ffffff; width: 8px; height: 100%; }
+        .flag-green { background-color: #15803d; width: 33.33%; height: 100%; }
+        .flag-white { background-color: #ffffff; width: 33.34%; height: 100%; }
 
-        /* Card Typography & Header Blocks */
-        .card-header {
-            text-align: center;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 8px;
-            margin-bottom: 12px;
-        }
-        .main-title {
-            font-size: 26px;
-            font-weight: 800;
-            color: #115e59;
-            margin: 0;
-            line-height: 1;
-            letter-spacing: -0.5px;
-        }
-        .sub-title {
-            font-size: 6px;
-            font-weight: 800;
-            color: #dc2626;
-            margin: 4px 0 0 0;
-            white-space: nowrap;
-        }
-        .taskforce-desc {
-            font-size: 8px;
-            font-weight: 800;
-            color: #0f172a;
-            text-transform: uppercase;
-            margin: 6px 0 4px 0;
-            line-height: 1.2;
-        }
-        .order-tag {
-            background-color: #f1f5f9;
-            color: #dc2626;
-            font-size: 9px;
-            font-weight: 900;
-            text-transform: uppercase;
-            padding: 2px 0;
-            border-radius: 4px;
-            margin: 0;
-            letter-spacing: 1px;
-        }
-
-        /* Card Content Frame */
-        .card-body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: calc(100% - 110px);
-            justify-content: space-between;
-        }
-        .passport-frame {
-            width: 100px;
-            height: 110px;
-            border: 2px solid #047857;
-            background-color: #f8fafc;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        .passport-placeholder {
-            width: 45px;
-            height: 45px;
-            background-color: #cbd5e1;
-            border-radius: 50%;
-            position: relative;
-        }
-        .passport-placeholder::after {
-            content: '';
+        .watermark-bg {
             position: absolute;
-            bottom: -15px;
-            left: -10px;
-            width: 65px;
-            height: 30px;
-            background-color: #cbd5e1;
-            border-radius: 20px 20px 0 0;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            width: 200px;
+            height: 200px;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
         }
-
-        /* Red Border Enclosed Output Box */
+        .front-watermark { left: 54%; }
+        
         .red-outline-box {
+            background-color: transparent !important;
             border: 2px solid #dc2626;
             border-radius: 8px;
             padding: 10px;
+            position: relative;
+            z-index: 10;
+            display: block;
             width: 100%;
-            box-sizing: border-box;
-            text-align: center;
-            background-color: transparent;
         }
-        .box-label {
+        .card-label {
             font-size: 9px;
             font-weight: 800;
             color: #dc2626;
-            margin: 0 0 2px 0;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 2px;
         }
-        .box-value {
-            font-size: 13px;
+        .card-value {
+            font-size: 14px;
             font-weight: 700;
             color: #0f172a;
             text-transform: uppercase;
-            margin: 0 0 10px 0;
-            min-height: 16px;
+            min-height: 22px;
+            line-height: 1.3 !important;
+            display: block;
+            word-wrap: break-word;
         }
-        .box-value.rank {
-            color: #115e59;
-            margin-bottom: 0;
+        
+        .brand-block-container {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding-left: 46px;
+            position: relative;
+        }
+        .brand-logo-placement {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 40px;
+            height: 40px;
+        }
+        .brand-title {
+            font-size: 26px !important;
+            font-weight: 800 !important;
+            color: #115e59 !important; 
+            letter-spacing: -0.02em !important;
+            line-height: 1.0 !important;
+            display: block;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .brand-subtitle {
+            font-size: 5.6px !important; 
+            font-weight: 800 !important;
+            color: #dc2626 !important; 
+            letter-spacing: -0.01em !important;
+            line-height: 1.1 !important;
+            display: block !important;
+            margin-top: 8px !important;
+            white-space: nowrap !important; 
         }
     </style>
 </head>
-<body>
+<body class="p-4 md:p-8">
 
-    <div class="container">
-        <header>
-            <span class="header-badge">Custom Taskforce Operational Layout</span>
-            <h1 style="font-size: 28px; margin: 10px 0 5px 0; color: #ffffff;">HDHTAN ID System & QR Validator</h1>
-            <p style="color: #94a3b8; margin: 0; font-size: 14px;">Configure, preview, and export print sheets with standard formatting rules.</p>
-            <p style="font-size: 12px; color: #64748b; margin: 10px 0 0 0;">Admin Account: <strong>malabubakarmohammed679@gmail.com</strong></p>
-        </header>
+    <div id="validation-view-panel" class="hidden max-w-md mx-auto my-12 bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center shadow-2xl">
+        <div class="w-20 h-20 bg-emerald-500/10 border border-emerald-500/30 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fa-solid fa-shield-check text-emerald-500 text-4xl"></i>
+        </div>
+        <span class="text-emerald-500 font-bold tracking-widest text-xs uppercase bg-emerald-500/10 px-4 py-1.5 rounded-full border border-emerald-500/20">
+            <i class="fa-solid fa-circle-check mr-1"></i> Official HDHTAN Verification Passed
+        </span>
+        
+        <h2 class="text-2xl font-extrabold text-white mt-6 mb-1 uppercase font-heading tracking-tight">NATIONAL TASKFORCE MEMBER</h2>
+        <p class="text-xs text-red-500 font-bold tracking-widest uppercase">Presidential Order-001</p>
 
-        <div class="workspace">
-            
-            <div class="controls-panel">
-                <h3 style="margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #334155; padding-bottom: 10px; font-size: 18px;">Card Customization Controls</h3>
-                
-                <div class="form-group">
-                    <label>Full Member Name</label>
-                    <input id="in-name" type="text" value="ABUBAKAR MOHAMMED">
+        <div class="mt-6 border-t border-b border-slate-800/80 py-4 my-4 space-y-3 text-left">
+            <div>
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Personnel Name</p>
+                <p id="v-name" class="text-lg font-bold text-slate-100 uppercase">-</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Rank / Assignment</p>
+                <p id="v-position" class="text-md font-bold text-emerald-400 uppercase">-</p>
+            </div>
+            <div class="grid grid-cols-2 gap-4 pt-1">
+                <div>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Issued Date</p>
+                    <p id="v-issue" class="text-sm font-semibold text-slate-300">-</p>
                 </div>
-                
-                <div class="form-group">
-                    <label>Official Position / Rank</label>
-                    <input id="in-pos" type="text" value="ADMIN">
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div class="form-group">
-                        <label>Issue Date</label>
-                        <input type="text" value="01/01/2026" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label>Expiry Date</label>
-                        <input type="text" value="31/12/2026" disabled>
-                    </div>
+                <div>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Expiration Date</p>
+                    <p id="v-expire" class="text-sm font-bold text-red-400">-</p>
                 </div>
             </div>
-
-            <div class="preview-area">
-                
-                <div class="id-card-wrapper">
-                    <div class="flag-ruler">
-                        <div class="flag-green"></div>
-                        <div class="flag-white"></div>
-                        <div class="flag-green"></div>
-                    </div>
-
-                    <div class="card-header">
-                        <h2 class="main-title">HDHTAN</h2>
-                        <h4 class="sub-title">IN COLLABORATION WITH FEDERAL GOVERNMENT (PPP)</h4>
-                        <div class="taskforce-desc">Special Taskforce Against Economic Sabotage</div>
-                        <p class="order-tag">Presidential Order-001</p>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="passport-frame">
-                            <div class="passport-placeholder"></div>
-                        </div>
-
-                        <div class="red-outline-box">
-                            <p class="box-label">NAME:</p>
-                            <div id="lbl-name" class="box-value">ABUBAKAR MOHAMMED</div>
-                            
-                            <p class="box-label" style="border-top: 1px dashed #cbd5e1; padding-top: 6px;">RANK / POSITION:</p>
-                            <div id="lbl-pos" class="box-value rank">ADMIN</div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
         </div>
     </div>
 
-    <script>
-        const inputName = document.getElementById('in-name');
-        const inputPos = document.getElementById('in-pos');
-        const lblName = document.getElementById('lbl-name');
-        const lblPos = document.getElementById('lbl-pos');
-
-        inputName.addEventListener('input', function() {
-            lblName.innerText = inputName.value.toUpperCase() || "MEMBER NAME";
-        });
-
-        inputPos.addEventListener('input', function() {
-            lblPos.innerText = inputPos.value.toUpperCase() || "OPERATIONAL POSITION";
-        });
-    </script>
-</body>
-</html>
+    <div id="generator-view-panel" class="block max-w-7xl mx-auto">
+        <header class="flex flex-col
