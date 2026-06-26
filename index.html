@@ -2,73 +2,77 @@
 <html lang="en">
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>HDHTAN System</title>
+    <style>
+        .id-card { width: 320px; height: 500px; background: white; border-radius: 12px; position: relative; overflow: hidden; border: 1px solid #e2e8f0; }
+        .watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 250px; opacity: 0.1; }
+    </style>
 </head>
-<body class="bg-slate-900 text-white p-6">
+<body class="bg-slate-900 p-8 text-white">
 
-    <div id="status" class="text-xs text-slate-500 mb-4 text-center"></div>
-
-    <div id="validator-ui" class="hidden max-w-sm mx-auto bg-slate-800 p-8 rounded-2xl border-2 border-emerald-500 text-center shadow-2xl">
-        <h2 class="text-2xl font-bold text-emerald-400 uppercase">Verification Result</h2>
-        <div class="mt-6 text-left border-t border-slate-700 pt-4 space-y-2">
-            <p class="text-slate-400">Name: <span id="v-name" class="text-white font-bold text-lg">...</span></p>
-            <p class="text-slate-400">Rank: <span id="v-rank" class="text-white font-bold text-lg">...</span></p>
+    <div id="validator-ui" class="hidden max-w-sm mx-auto bg-slate-800 p-8 rounded-2xl border-2 border-emerald-500 text-center">
+        <h2 class="text-2xl font-bold text-emerald-400">VERIFICATION</h2>
+        <div class="mt-6 text-left border-t pt-4">
+            <p>Name: <span id="v-name" class="font-bold">...</span></p>
+            <p>Rank: <span id="v-rank" class="font-bold">...</span></p>
         </div>
     </div>
 
-    <div id="generator-ui" class="max-w-sm mx-auto bg-slate-800 p-8 rounded-2xl">
-        <h2 class="text-xl font-bold mb-4">Generate ID QR</h2>
-        <input id="in-id" type="text" placeholder="Member ID (e.g., 001)" class="w-full p-2 mb-4 text-black rounded border border-slate-600">
-        <button onclick="generateQR()" class="bg-emerald-600 w-full py-2 rounded font-bold hover:bg-emerald-500">Generate QR Code</button>
-        <div id="qr-display" class="mt-6 flex justify-center bg-white p-2 rounded"></div>
+    <div id="generator-ui" class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-slate-800 p-6 rounded-xl">
+            <h2 class="text-xl font-bold mb-4">Taskforce Configuration</h2>
+            <input id="in-id" type="text" placeholder="Member ID (Matches Sheet)" class="w-full p-2 mb-2 text-black rounded">
+            <input id="in-name" type="text" placeholder="Full Name" class="w-full p-2 mb-2 text-black rounded">
+            <button onclick="generateEverything()" class="w-full bg-emerald-600 py-2 rounded font-bold mt-4">Generate ID & QR</button>
+        </div>
+
+        <div id="front" class="id-card p-6 shadow-2xl text-slate-900">
+            <div class="watermark"><svg viewBox="0 0 100 100" fill="#15803d"><path d="M50 5 L90 25 L90 75 L50 95 L10 75 L10 25 Z"/></svg></div>
+            <div class="relative z-10 text-center">
+                <h1 class="text-2xl font-black text-emerald-900">HDHTAN</h1>
+                <p class="text-[8px] uppercase font-bold text-red-600">Presidential Order-001</p>
+                <div class="w-24 h-24 bg-slate-200 mx-auto my-4 rounded border-2 border-emerald-800"></div>
+                <h3 id="out-name" class="font-bold text-lg uppercase">NAME HERE</h3>
+                <div id="qr-display" class="mt-4 flex justify-center"></div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Your live CSV link
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSaK6KrGDiuYMXgxnSlJ47PS_BWFTwe1sw5buJcLtw_ENaHszXtFJh2MpsLAEtNmF98ge70Pgiendtn/pub?output=csv';
 
-        async function checkDatabase() {
-            const params = new URLSearchParams(window.location.search);
-            const idToFind = params.get('id');
-            const status = document.getElementById('status');
-
-            if (!idToFind) return;
-
-            document.getElementById('generator-ui').classList.add('hidden');
-            document.getElementById('validator-ui').classList.remove('hidden');
-
-            try {
-                status.innerText = "Connecting to database...";
-                const res = await fetch(CSV_URL);
-                if (!res.ok) throw new Error("Failed to fetch sheet");
-                
-                const data = await res.text();
-                const rows = data.split('\n');
-                
-                let found = false;
-                for (let i = 1; i < rows.length; i++) {
-                    const row = rows[i].split(',');
-                    if (row[0] && row[0].trim() === idToFind.trim()) {
-                        document.getElementById('v-name').innerText = row[1] || "No Name Found";
-                        document.getElementById('v-rank').innerText = row[2] || "No Rank Found";
-                        found = true;
-                        status.innerText = "Verified successfully.";
-                    }
-                }
-                if (!found) status.innerText = "Error: ID not found in records.";
-            } catch (err) {
-                status.innerText = "System Error: " + err.message;
-            }
-        }
-
-        function generateQR() {
+        // GENERATOR
+        function generateEverything() {
             const id = document.getElementById('in-id').value;
-            if(!id) return alert("Please enter an ID");
-            const link = window.location.href.split('?')[0] + '?id=' + id;
-            const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(link)}`;
+            const name = document.getElementById('in-name').value;
+            document.getElementById('out-name').innerText = name;
+            
+            const link = window.location.origin + window.location.pathname + '?id=' + id;
+            const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(link)}`;
             document.getElementById('qr-display').innerHTML = `<img src="${qrApi}">`;
         }
 
+        // VALIDATOR
+        async function checkDatabase() {
+            const params = new URLSearchParams(window.location.search);
+            const idToFind = params.get('id');
+            if (!idToFind) return;
+
+            document.getElementById('generator-ui').classList.add('hidden');
+            
+            try {
+                const res = await fetch(CSV_URL);
+                const data = await res.text();
+                const rows = data.split('\n');
+                for (let i = 1; i < rows.length; i++) {
+                    const row = rows[i].split(',');
+                    if (row[0].trim() === idToFind.trim()) {
+                        document.getElementById('validator-ui').classList.remove('hidden');
+                        document.getElementById('v-name').innerText = row[1];
+                        document.getElementById('v-rank').innerText = row[2];
+                    }
+                }
+            } catch (e) { alert("Database connection error"); }
+        }
         checkDatabase();
     </script>
 </body>
